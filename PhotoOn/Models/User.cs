@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace PhotoOn.Models
 {
-    public class User : IdentityUser<int>
+    public class User : IdentityUser
     {
         public int Age { get; set; } // возраст пользователя
 

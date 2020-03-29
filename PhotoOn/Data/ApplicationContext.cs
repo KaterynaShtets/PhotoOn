@@ -4,7 +4,7 @@ using PhotoOn.Models;
 
 namespace PhotoOn.Data
 {
-    public class ApplicationContext : IdentityDbContext
+    public class ApplicationContext : IdentityDbContext<User>
     {
         public DbSet<Like> Likes { get; set; }
         public DbSet<Publication> Publications { get; set; }
