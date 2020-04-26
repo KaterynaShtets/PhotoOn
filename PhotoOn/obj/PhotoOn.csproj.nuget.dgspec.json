@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\katri\\OneDrive\\Рабочий стол\\PhotoOn\\PhotoOn\\PhotoOn.csproj": {}
+    "D:\\_Kate\\Univer\\4_semester\\_Kate\\ПрП\\Проект\\PhotoOn\\PhotoOn\\PhotoOn.csproj": {}
   },
   "projects": {
-    "C:\\Users\\katri\\OneDrive\\Рабочий стол\\PhotoOn\\PhotoOn\\PhotoOn.csproj": {
+    "D:\\_Kate\\Univer\\4_semester\\_Kate\\ПрП\\Проект\\PhotoOn\\PhotoOn\\PhotoOn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\katri\\OneDrive\\Рабочий стол\\PhotoOn\\PhotoOn\\PhotoOn.csproj",
+        "projectUniqueName": "D:\\_Kate\\Univer\\4_semester\\_Kate\\ПрП\\Проект\\PhotoOn\\PhotoOn\\PhotoOn.csproj",
         "projectName": "PhotoOn",
-        "projectPath": "C:\\Users\\katri\\OneDrive\\Рабочий стол\\PhotoOn\\PhotoOn\\PhotoOn.csproj",
-        "packagesPath": "C:\\Users\\katri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\katri\\OneDrive\\Рабочий стол\\PhotoOn\\PhotoOn\\obj\\",
+        "projectPath": "D:\\_Kate\\Univer\\4_semester\\_Kate\\ПрП\\Проект\\PhotoOn\\PhotoOn\\PhotoOn.csproj",
+        "packagesPath": "C:\\Users\\aatka\\.nuget\\packages\\",
+        "outputPath": "D:\\_Kate\\Univer\\4_semester\\_Kate\\ПрП\\Проект\\PhotoOn\\PhotoOn\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\katri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aatka\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
