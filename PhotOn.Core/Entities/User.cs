@@ -11,6 +11,7 @@ namespace PhotOn.Core.Entities
             UserEvents = new List<UserEvent>();
             PublicationPurchases = new List<PublicationPurchase>();
             SavedPublications = new List<SavedPublication>();
+            Publications = new List<Publication>();
             Likes = new List<Like>();
         }
 
@@ -19,6 +20,7 @@ namespace PhotOn.Core.Entities
         public ICollection<PublicationPurchase> PublicationPurchases { get; set; }
         public ICollection<Like> Likes { get; set; }
         public ICollection<SavedPublication> SavedPublications { get; set; }
+        public ICollection<Publication> Publications { get; set; }
 
     }
 }

@@ -25,6 +25,8 @@ namespace PhotOn.Core.Entities
             Likes = new List<Like>();
         }
 
+        public string UserId { get; set; }
+        public User User { get; set; }
         public string Title { get; set; }
         public decimal? Price { get; set; }
         public decimal coordX { get; set; }

@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PhotOn.Core.Repositories;
+using PhotOn.Core.Repositories.Base;
 using PhotOn.Infrastructure.Data;
+using PhotOn.Infrastructure.Repository.Base;
 
 namespace PhotoOn
 {
@@ -25,10 +28,12 @@ namespace PhotoOn
             {
                 config.UseSqlServer(Configuration.GetConnectionString("PhotOnDbConnection"));
             });
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<PhotOnContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddScoped(typeof(IRepository<>), typeof(EditRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews();
 
         }

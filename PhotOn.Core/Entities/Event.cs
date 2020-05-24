@@ -13,8 +13,7 @@ namespace PhotOn.Core.Entities
 
         public DateTime DateTime { get; set; }
         public string TextDescription { get; set; }
-        public int AwardId { get; set; }
-        public Award Award { get; set; }
+        public string AwardTitle { get; set; }
         public ICollection<UserEvent> UserEvents { get; set; }
 
     }

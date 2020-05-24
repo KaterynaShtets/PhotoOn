@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoOn.Web", "PhotoOn\PhotoOn.Web.csproj", "{3776AD00-7F13-4D30-A74F-19EAC92B4432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotOn.Infrastructure", "PhotOn.Infrastructure\PhotOn.Infrastructure.csproj", "{F3C48A6F-8F8E-47A5-BCCD-5D0F34226089}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotOn.Infrastructure", "PhotOn.Infrastructure\PhotOn.Infrastructure.csproj", "{F3C48A6F-8F8E-47A5-BCCD-5D0F34226089}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotOn.Core", "PhotOn.Core\PhotOn.Core.csproj", "{67C2E23B-9C9C-4FE0-9957-065076E22E2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotOn.Core", "PhotOn.Core\PhotOn.Core.csproj", "{67C2E23B-9C9C-4FE0-9957-065076E22E2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotOn.Application", "PhotOn.Application\PhotOn.Application.csproj", "{7FF1330D-1785-4450-83F0-DE00348D4D9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotOn.Application", "PhotOn.Application\PhotOn.Application.csproj", "{7FF1330D-1785-4450-83F0-DE00348D4D9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoOn.Web", "PhotoOn.Web\PhotoOn.Web.csproj", "{6A27EE1D-534B-4F52-8C64-EAA35C6F4C30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24ED7C9F-6179-4192-8799-B7DD14948F87}"
+	ProjectSection(SolutionItems) = preProject
+		InfrastructureDiagram.cd = InfrastructureDiagram.cd
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3776AD00-7F13-4D30-A74F-19EAC92B4432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3776AD00-7F13-4D30-A74F-19EAC92B4432}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3776AD00-7F13-4D30-A74F-19EAC92B4432}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3776AD00-7F13-4D30-A74F-19EAC92B4432}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3C48A6F-8F8E-47A5-BCCD-5D0F34226089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F3C48A6F-8F8E-47A5-BCCD-5D0F34226089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3C48A6F-8F8E-47A5-BCCD-5D0F34226089}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +34,10 @@ Global
 		{7FF1330D-1785-4450-83F0-DE00348D4D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF1330D-1785-4450-83F0-DE00348D4D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FF1330D-1785-4450-83F0-DE00348D4D9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A27EE1D-534B-4F52-8C64-EAA35C6F4C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A27EE1D-534B-4F52-8C64-EAA35C6F4C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A27EE1D-534B-4F52-8C64-EAA35C6F4C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A27EE1D-534B-4F52-8C64-EAA35C6F4C30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
