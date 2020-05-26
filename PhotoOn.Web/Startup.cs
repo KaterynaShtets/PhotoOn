@@ -9,6 +9,7 @@ using PhotOn.Core.Repositories;
 using PhotOn.Core.Repositories.Base;
 using PhotOn.Infrastructure.Data;
 using PhotOn.Infrastructure.Repository.Base;
+using System;
 
 namespace PhotoOn
 {
@@ -32,7 +33,13 @@ namespace PhotoOn
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<PhotOnContext>()
                 .AddDefaultTokenProviders();
-            services.AddScoped(typeof(IRepository<>), typeof(EditRepository<>));
+            services.Configure<IdentityOptions>(options => {
+
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = true;
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews();
 

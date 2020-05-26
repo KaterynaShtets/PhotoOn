@@ -21,9 +21,4 @@
     <ProjectReference Include="..\PhotOn.Core\PhotOn.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-    <Folder Include="Logging\" />
-  </ItemGroup>
-
 </Project>
