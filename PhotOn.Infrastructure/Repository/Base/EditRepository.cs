@@ -4,38 +4,45 @@ using PhotOn.Core.Repositories.Base;
 using PhotOn.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PhotOn.Infrastructure.Repository.Base
 {
-    public class EditRepository<T> : IEditRepository<T> where T : Entity
+    public class EditRepository<TEntity> : IEditRepository<TEntity> where TEntity : Entity
     {
-        protected readonly PhotOnContext _dbContext;
-        internal DbSet<T> _dbSet;
+        protected readonly PhotOnContext Context;
 
-        public EditRepository(PhotOnContext dbContext)
+        public EditRepository(PhotOnContext context)
         {
-            _dbContext = dbContext;
-            this._dbSet = _dbContext.Set<T>();
-        }
-       
-
-        public void Add(T entity)
-        {
-            _dbSet.Add(entity);
+            Context = context;
         }
 
-        public void Update(T entity)
+        public void Add(TEntity entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            Context.Set<TEntity>().Add(entity);
         }
 
-        public void Delete(int id)
+        public void Remove(TEntity entity)
         {
-            T entity = _dbSet.Find(id);
-            entity.IsDeleted = true;
+            Context.Set<TEntity>().Remove(entity);
+        }
+
+        public void SoftDelete(int id)
+        {
+            Context.Set<TEntity>().Find(id).IsDeleted = true;
+        }
+
+        public void RemoveSoftDelete(int id)
+        {
+            Context.Set<TEntity>().Find(id).IsDeleted = false;
+        }
+
+        public void Update(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
         }
     }
-
 }

@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PhotOn.Core.Entities;
 using System.Reflection;
 
 namespace PhotOn.Infrastructure.Data
 {
-    public class PhotOnContext : IdentityDbContext<User>
+    public class PhotOnContext : IdentityDbContext<ApplicationUser>
     {
         public PhotOnContext() { }
         public PhotOnContext(DbContextOptions<PhotOnContext> options)
@@ -13,6 +14,7 @@ namespace PhotOn.Infrastructure.Data
         {
         }
 
+        public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Publication> Publications { get; set; }
         public DbSet<PublicationTag> PublicationTags { get; set; }
@@ -22,7 +24,6 @@ namespace PhotOn.Infrastructure.Data
         public DbSet<PublicationPurchase> PublicationPurchases { get; set; }
         public DbSet<UserEvent> UserEvents { get; set; }
         public DbSet<Event> Events { get; set; }
-        public DbSet<PublicationImage> PublicationImages { get; set; }
         public DbSet<SavedPublication> SavedPublications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

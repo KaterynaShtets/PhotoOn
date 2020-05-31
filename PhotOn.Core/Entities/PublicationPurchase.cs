@@ -8,7 +8,7 @@ namespace PhotOn.Core.Entities
         public int PublicationId { get; set; }
         public Publication Publication { get; set; }
         public string UserId { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
         public DateTime PurchaseDate { get; set; }
     }
 }

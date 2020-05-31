@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotOn.Core.Repositories.Base
 {
-    public interface IEditRepository <T> where T : Entity
+    public interface IEditRepository<TEntity> where TEntity : class
     {
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(int id);
+        void Add(TEntity entity);
+        void Remove(TEntity entity);
+        void SoftDelete(int id);
+        void RemoveSoftDelete(int id);
+        void Update(TEntity entity);
     }
 }

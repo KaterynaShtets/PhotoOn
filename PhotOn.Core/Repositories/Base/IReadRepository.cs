@@ -1,20 +1,16 @@
 ﻿using PhotOn.Core.Entities.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PhotOn.Core.Repositories.Base
 {
-    public interface IReadRepository<T> where T : Entity
+    public interface IReadRepository<TEntity> where TEntity : class
     {
-        T Get(int id);
-
-        IEnumerable<T> GetAll();
-
-        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
-
-        T SingleOrDefault(Expression<Func<T, bool>> predicate);
+        TEntity Get(int id);
+        IEnumerable<TEntity> GetAll();
     }
 }

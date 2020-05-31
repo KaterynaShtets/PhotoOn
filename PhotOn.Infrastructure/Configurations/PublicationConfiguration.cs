@@ -16,8 +16,8 @@ namespace PhotOn.Infrastructure.Configurations
                 builder.HasOne(sc => sc.User)
                     .WithMany(s => s.Publications)
                     .HasForeignKey(sc => sc.UserId);
-            }
 
+            }
         }
     }
 }
