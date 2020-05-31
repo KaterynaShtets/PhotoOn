@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PhotOn.Application.Interfaces;
-using PhotOn.Application.Model.Creation;
+using PhotOn.Application.Dtos;
 using PhotOn.Application.Models;
 using PhotOn.Core.Entities;
 using PhotOn.Core.Repositories;

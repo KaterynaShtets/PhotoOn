@@ -4,6 +4,7 @@ using PhotOn.Application.Models;
 using PhotOn.Core.Entities;
 using System;
 using System.Linq;
+using PhotOn.Application.Dtos;
 
 namespace PhotOn.Application.Mapper
 {
@@ -29,14 +30,13 @@ namespace PhotOn.Application.Mapper
         {
             // Single mapping
 
-            CreateMap<Equipment, EquipmentModel>().ReverseMap();
-            CreateMap<Tag, TagModel>().ReverseMap();
-            CreateMap<ApplicationUser, UserModel>()
+            CreateMap<Equipment, EquipmentDto>().ReverseMap();
+            CreateMap<Tag, TagDto>().ReverseMap();
+            CreateMap<ApplicationUser, UserDto>()
                 .ReverseMap();
-            CreateMap<PublicationModelForCreation, Publication>()
+            CreateMap<PublicationCreationDto, Publication>()
                 .ForMember(x => x.ImageLink, options => options.Ignore());
-            CreateMap<Publication, PublicationModel>();
-            CreateMap<Publication, PublicationDetailsModel>()
+            CreateMap<Publication, PublicationDetailsDto>()
                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
                .ForMember(dest => dest.EquipmentModels, opt => opt.MapFrom(src => src.PublicationEquipments.Select(e => e.Equipment)))
                .ForMember(dest => dest.TagModels, opt => opt.MapFrom(src => src.PublicationTags.Select(e => e.Tag))).ReverseMap();

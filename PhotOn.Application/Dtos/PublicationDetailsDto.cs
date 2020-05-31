@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotOn.Application.Models
+namespace PhotOn.Application.Dtos
 {
     public enum TimeOfTheYearDto
     {
@@ -12,11 +12,10 @@ namespace PhotOn.Application.Models
         Summer,
         Autumn
     }
-
-    public class PublicationModel
+    public class PublicationDetailsDto
     {
         public int Id { get; set; }
-        public UserModel User { get; set; }
+        public UserDto User { get; set; }
         public string Title { get; set; }
         public decimal? Price { get; set; }
         public decimal coordX { get; set; }
@@ -27,5 +26,7 @@ namespace PhotOn.Application.Models
         public int LikeCount { get; set; }
 
         public string ImageLink;
+        public IEnumerable<EquipmentDto> EquipmentModels { get; private set; }
+        public IEnumerable<TagDto> TagModels { get; private set; }
     }
 }

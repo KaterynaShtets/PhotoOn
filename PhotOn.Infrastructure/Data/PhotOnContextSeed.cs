@@ -174,21 +174,18 @@ namespace PhotOn.Infrastructure.Data
                     Email = "katetkacenko@gmail.com",
                     DOB = new DateTime(20,06,1),
                     PasswordHash = "AQAAAAEAACcQAAAAEFEE6EMSLVfi6QJCco6xbW0CPCgan6Vl/aN6LInRcQ+HxhwT4i1ZwGXiF8eu+c/B/Q==",
-                    Role="Admin"
                 },
                 new ApplicationUser() {
                     Id = "56343e64-bb55-4c56-b8a6-61c7a5d60a3d",
                     Email = "katetkacenko@gmail.com",
                     DOB = new DateTime(20, 06, 2),
                     PasswordHash = "AQAAAAEAACcQAAAAEFEE6EMSLVfi6QJCco6xbW0CPCgan6Vl/aN6LInRcQ+HxhwT4i1ZwGXiF8eu+c/B/Q==",
-                    Role = "User"
         },
                 new ApplicationUser() {
                     Id = "8d102a82-40a8-4771-9c4d-2a3c8897ac6d",
                     Email = "katetkacenko@gmail.com",
                     DOB = new DateTime(18, 09, 3),
                     PasswordHash = "AQAAAAEAACcQAAAAEFEE6EMSLVfi6QJCco6xbW0CPCgan6Vl/aN6LInRcQ+HxhwT4i1ZwGXiF8eu+c/B/Q==",
-                    Role = "Expert"
                 },
             };
         }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PhotOn.Application.Dtos;
 using PhotOn.Application.Interfaces;
 using PhotOn.Application.Model;
 using PhotOn.Application.Models;
@@ -30,13 +31,13 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<PublicationDetailsModel>> GetAll()
+        public ActionResult<IEnumerable<PublicationDetailsDto>> GetAll()
         {
             return Json(_pServ.GetAllPublications());
         }
 
         [HttpGet("{Id:int}")]
-        public ActionResult<IEnumerable<PublicationDetailsModel>> Get(int id)
+        public ActionResult<IEnumerable<PublicationDetailsDto>> Get(int id)
         {
             var pubModel = _pServ.Get(id);
             if (pubModel == null) 
@@ -47,7 +48,7 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpPost]
-        public ActionResult Post([FromForm] PublicationModelForCreation publCreation)
+        public ActionResult Post([FromForm] PublicationCreationDto publCreation)
         {
 
             _pServ.Add(publCreation);
@@ -55,7 +56,7 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpPut("{Id:int}")]
-        public ActionResult Put(int id, [FromForm] PublicationModelForCreation publicationModel)
+        public ActionResult Put(int id, [FromForm] PublicationCreationDto publicationModel)
         {
             _pServ.Edit(id, publicationModel);
             return NoContent();
@@ -74,7 +75,7 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpGet("filter")]
-        public ActionResult<IEnumerable<PublicationModel>> Filter([FromQuery] PublicationFilterModel filterPublicationModel)
+        public ActionResult<IEnumerable<PublicationDetailsDto>> Filter([FromQuery] PublicationFilterModel filterPublicationModel)
         {
             var publicationsQueryable = _pServ.FilterPublications(filterPublicationModel);
 
@@ -85,7 +86,7 @@ namespace PhotOn.Web.Controllers.Api
 
             return publications;
         }
-
+        
         [HttpGet("profile")]
         public ActionResult<ProfileUserPageModel> SetProfile()
         {

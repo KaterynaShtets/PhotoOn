@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotOn.Application.Model.Creation
+namespace PhotOn.Application.Model.Dtos
 {
-    public class UserInfo
+    public class UserCreationDto
     {
         public string Email { get; set; }
         public DateTime DOB { get; set; }

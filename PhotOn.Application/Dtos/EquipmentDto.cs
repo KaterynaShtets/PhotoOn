@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotOn.Application.Models
+namespace PhotOn.Application.Dtos
 {
-    public class TagModel
+    public class EquipmentDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

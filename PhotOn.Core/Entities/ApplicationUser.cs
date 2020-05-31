@@ -15,11 +15,9 @@ namespace PhotOn.Core.Entities
             Publications = new List<Publication>();
             Likes = new List<Like>();
             Balance = 0;
-            Role = "User";
         }
 
         public DateTime DOB { get; set; }
-        public string Role { get; set; }
         public int Balance { get; set; }
         public ICollection<UserEvent> UserEvents { get; set; }
         public ICollection<PublicationPurchase> PublicationPurchases { get; set; }

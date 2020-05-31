@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PhotOn.Application.Dtos;
 using PhotOn.Application.Interfaces;
-using PhotOn.Application.Model;
-using PhotOn.Application.Model.Creation;
+using PhotOn.Application.Model.Dtos;
 using PhotOn.Application.Models;
 using PhotOn.Core.Entities;
 using PhotOn.Web.Helpers;
@@ -40,7 +40,7 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpPost("Create")]
-        public async Task<ActionResult<UserToken>> Create([FromBody] UserInfo registrationModel)
+        public async Task<ActionResult<UserToken>> Create([FromBody] UserCreationDto registrationModel)
         {
             var userEntity = new ApplicationUser
             {
@@ -50,9 +50,12 @@ namespace PhotOn.Web.Controllers.Api
             };
 
             var result = await _userManager.CreateAsync(userEntity, registrationModel.Password);
-
+            
             if (result.Succeeded)
             {
+                var roleId =  _roleManager.Roles.SingleOrDefault(R => R.Name == "User").Id;
+                await _userManager.AddToRoleAsync(userEntity, "USER");
+                
                 return _userService.CreateToken(registrationModel.Email);
             }
             else
@@ -62,7 +65,7 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<UserToken>> Login([FromBody] UserInfo loginModel)
+        public async Task<ActionResult<UserToken>> Login([FromBody] UserCreationDto loginModel)
         {
             var result = await _signInManager.PasswordSignInAsync(
                 loginModel.Email,
@@ -88,12 +91,12 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpGet("Users")]
-        public ActionResult<IEnumerable<UserModel>> Get([FromQuery] PaginationModel pagination)
+        public ActionResult<IEnumerable<UserDto>> Get([FromQuery] PaginationModel pagination)
         {
             var usersList = _userManager.Users.ToList();
             HttpContext.InsertPaginationParametersInRepsonse(usersList, pagination.RecordsPerPage);
             var padinatesList = usersList.Paginate(pagination);
-            return Ok(_mapper.Map<IEnumerable<UserModel>>(padinatesList));
+            return Ok(_mapper.Map<IEnumerable<UserDto>>(padinatesList));
         }
 
 
@@ -106,7 +109,7 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpGet("AssignRole")]
-        public async Task<ActionResult> AssignRole(EditRoleModel editRoleModel)
+        public async Task<ActionResult> AssignRole(EditRoleDto editRoleModel)
         {
             var user = await _userManager.FindByIdAsync(editRoleModel.UserId);
             if (user == null)

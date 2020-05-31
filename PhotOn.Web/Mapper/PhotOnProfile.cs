@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PhotOn.Application.Dtos;
 using PhotOn.Application.Models;
 using PhotOn.Core.Entities;
 
@@ -8,7 +9,7 @@ namespace PhotOn.Web.Mapper
     {
         public PhotOnProfile()
         {
-            CreateMap<UserModel, ApplicationUser>().ReverseMap();
+            CreateMap<UserDto, ApplicationUser>().ReverseMap();
         }
     }
 }
