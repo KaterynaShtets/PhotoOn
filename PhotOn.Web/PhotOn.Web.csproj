@@ -9,8 +9,7 @@
     <Folder Include="Models\Events\" />
     <Folder Include="Models\Publications\" />
     <Folder Include="Models\Users\" />
-    <Folder Include="Views\Publications\" />
-    <Folder Include="Views\Shared\Publications\" />
+    <Folder Include="Views\Admin\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿using PhotOn.Core.Repositories;
+﻿using PhotOn.Core.Entities.Base;
+using PhotOn.Core.Repositories;
+using PhotOn.Core.Repositories.Base;
 using PhotOn.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -18,23 +20,24 @@ namespace PhotOn.Infrastructure.Repository.Base
             _db = db;
         }
 
-        public IPublicationRepository PublicatonRepository
+        public IPublicationRepository Publications
         {
             get { return _publicatonRepository = _publicatonRepository ?? new PublicationRepository(_db); }
         }
 
-        public ITagRepository TagRepository 
+        public ITagRepository Tags
         { 
             get { return _tagRepository = _tagRepository ?? new TagRepository(_db); }
 
         }
 
-        public IEquipmentRepository EquipmentRepository => throw new NotImplementedException();
+        public IEquipmentRepository Equipments
+        {
+            get { return _equipmentRepository = _equipmentRepository ?? new EquipmentRepository(_db); }
 
-        //public IUserRepository UserRepository
-        //{
-        //    get { return _userRepository = _userRepository ?? new UserRepository(_db); }
-        //}
+        }
+
+     
 
         public void Save()
         {

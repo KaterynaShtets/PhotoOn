@@ -28,7 +28,7 @@ namespace PhotOn.Application.Services
             try
             {
                 var equipment = ObjectMapper.Mapper.Map<Equipment>(equipmentDto);
-                _db.EquipmentRepository.Add(equipment);
+                _db.Equipments.Add(equipment);
                 _db.Save();
             }
             catch
@@ -42,7 +42,7 @@ namespace PhotOn.Application.Services
             try
             {
                 var equipment = ObjectMapper.Mapper.Map<Equipment>(equipmentDto);
-                _db.EquipmentRepository.Update(equipment);
+                _db.Equipments.Update(equipment);
                 _db.Save();
             }
             catch
@@ -53,19 +53,19 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<EquipmentDto> GetAllEquipment()
         {
-           var equipments = _db.EquipmentRepository.GetAll();
+           var equipments = _db.Equipments.GetAll();
             return ObjectMapper.Mapper.Map<IEnumerable<EquipmentDto>>(equipments);
         }
 
         public EquipmentDto GetEquipment(int id)
         {
-            var equipment = _db.EquipmentRepository.Get(id);
+            var equipment = _db.Equipments.Get(id);
             return ObjectMapper.Mapper.Map<EquipmentDto>(equipment);
         }
 
         public void SoftDeleteEquipment(int id)
         {
-            _db.EquipmentRepository.SoftDelete(id);
+            _db.Equipments.SoftDelete(id);
         }
     }
 }

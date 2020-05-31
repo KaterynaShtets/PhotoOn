@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Security.Claims;
 
 namespace PhotOn.Application.Services
 {
@@ -20,13 +21,16 @@ namespace PhotOn.Application.Services
         private readonly IUnitOfWork _db;
         private readonly ILogger<PublicationService> _logger;
         private readonly IFileStorageServcie _fileStorageService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         private readonly string containerName = "publications";
 
-        public PublicationService(IUnitOfWork unitOfWork, ILogger<PublicationService> logger, IFileStorageServcie fileStorageServcie)
+        public PublicationService(IUnitOfWork unitOfWork, ILogger<PublicationService> logger, IFileStorageServcie fileStorageServcie, IHttpContextAccessor httpContextAccessor)
         {
             _db = unitOfWork;
             _logger = logger;
             _fileStorageService = fileStorageServcie;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public  void Add(PublicationCreationDto publicationCreationModel)
@@ -47,7 +51,7 @@ namespace PhotOn.Application.Services
                         
                     }
                 }
-                _db.PublicatonRepository.Add(publication);
+                _db.Publications.Add(publication);
                 _db.Save();
             }
             catch (Exception ex)
@@ -60,7 +64,7 @@ namespace PhotOn.Application.Services
         {
             try
             {
-                _db.PublicatonRepository.SoftDelete(id);
+                _db.Publications.SoftDelete(id);
                 _db.Save();
             }
             catch (Exception ex)
@@ -73,7 +77,7 @@ namespace PhotOn.Application.Services
         {
             try
             {
-                var entity = _db.PublicatonRepository.SingleOrDefault(x => x.Id == id);
+                var entity = _db.Publications.SingleOrDefault(x => x.Id == id);
                 if (entity == null)
                     throw new ApplicationException($"Entity could not be mapped.");
                 entity = ObjectMapper.Mapper.Map(publicationCreationModel, entity);
@@ -88,7 +92,7 @@ namespace PhotOn.Application.Services
                     }
                 }
 
-                _db.PublicatonRepository.Update(entity);
+                _db.Publications.Update(entity);
                 _db.Save();
             }
             catch (Exception ex)
@@ -99,21 +103,21 @@ namespace PhotOn.Application.Services
 
         public PublicationDetailsDto Get(int id)
         {
-            var publication = _db.PublicatonRepository.Get(id);
+            var publication = _db.Publications.Get(id);
             var mapped = ObjectMapper.Mapper.Map<PublicationDetailsDto>(publication);
             return mapped;
         }
 
         public IEnumerable<PublicationDetailsDto> GetAllPublications()
         {
-            var publicationList = _db.PublicatonRepository.GetAll();
+            var publicationList = _db.Publications.GetAll();
             var mapped = ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(publicationList);
             return mapped;
         }
 
         public IEnumerable<PublicationDetailsDto> FilterPublications(PublicationFilterModel filterPublicationModel)
         {
-            var publicationsQueryable = _db.PublicatonRepository.GetAll().AsQueryable();
+            var publicationsQueryable = _db.Publications.GetAll().AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filterPublicationModel.Title)) 
             {
@@ -157,20 +161,34 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<PublicationDetailsDto> GetUserLikedPublications(string userId) 
         {
-            var likedPublications =  _db.PublicatonRepository.GetAllPresent().Where(p => p.Likes.Select(l => l.UserId).Contains(userId));
+            var likedPublications =  _db.Publications.GetAllPresent().Where(p => p.Likes.Select(l => l.UserId).Contains(userId));
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
         }
 
         public IEnumerable<PublicationDetailsDto> GetUserSavedPublications(string userId)
         {
-            var likedPublications = _db.PublicatonRepository.GetAllPresent().Where(p => p.SavedPublications.Select(l => l.UserId).Contains(userId));
+            var likedPublications = _db.Publications.GetAllPresent().Where(p => p.SavedPublications.Select(l => l.UserId).Contains(userId));
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
         }
 
         public IEnumerable<PublicationDetailsDto> GetUserPublications(string userId)
         {
-            var likedPublications = _db.PublicatonRepository.GetAllPresent().Where(p => p.UserId == userId);
+            var likedPublications = _db.Publications.GetAllPresent().Where(p => p.UserId == userId);
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
+        }
+
+        public void LikePublication(int id)
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            _db.Publications.AddLikeToPublication(userId, id);
+        }
+
+        public void SavePublication(int id)
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            _db.Publications.SavePublication(userId, id);
         }
     }
 }

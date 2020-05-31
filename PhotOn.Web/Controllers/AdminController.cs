@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PhotOn.Web.Controllers
 {
+    [Route("publications")]
     public class AdminController : Controller
     {
-        public IActionResult Index()
+        
+        public IActionResult GetPublications()
         {
             return View();
         }

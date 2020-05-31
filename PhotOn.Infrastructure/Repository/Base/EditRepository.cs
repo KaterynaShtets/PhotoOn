@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PhotOn.Infrastructure.Repository.Base
 {
-    public class EditRepository<TEntity> : IEditRepository<TEntity> where TEntity : Entity
+    public class EditRepository<TEntity> : IEditRepository<TEntity> where TEntity : Entity, new()
     {
         protected readonly PhotOnContext Context;
 

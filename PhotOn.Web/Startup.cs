@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -56,7 +57,6 @@ namespace PhotOn.Web
             }
 
             app.UseCors();
-            app.UseResponseCompression();
 
             app.UseHttpsRedirection();
 
@@ -79,8 +79,7 @@ namespace PhotOn.Web
 
         private void ConfigurePhotOnServices(IServiceCollection services)
         {
-            services.AddResponseCompression();
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Add Infrastructure Layer
             ConfigureDatabases(services);
             services.AddScoped(typeof(IEditRepository<>), typeof(EditRepository<>));

@@ -1,0 +1,55 @@
+﻿@model PhotOn.Web.Models.PublicationsViewModel
+@{
+    ViewData["Title"] = "PublicationList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Publications</h1>
+@Html.ActionLink("Add publication", "New", "Publications", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-sm" })
+<table id="publications" class="table table-hover">
+    <thead>
+        <tr scope="row">
+            <th>Picture</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var publication in Model.Publications)
+        {
+            <tr scope="row">
+                <td><img src='@publication.ImageLink' alt='No image.' class='img-thumbnail-publication' /></td>
+                <td>@publication.Id</td>
+                <td>@Html.ActionLink(publication.Title, "Details", "Publications", htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
+                <td>@publication.coordX</td>
+                <td>@publication.coordY</td>
+                <td>@Html.ActionLink("Edit", "Edit", "Publications", htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
+                <td>@Html.ActionLink("Delete", "Delete", "Publications", htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#publications').DataTable({
+                columns: [
+                    {
+                        orderable: false
+                    },
+                    {},
+                    {},
+                    {},
+                    {},
+                    {},
+                    {}
+                ]
+            });
+        });
+    </script>
+}

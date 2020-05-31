@@ -16,9 +16,38 @@ namespace PhotOn.Infrastructure.Repository
     public class PublicationRepository : EditRepository<Publication>, IPublicationRepository
     {
         internal DbSet<Publication> _dbSet;
-        public PublicationRepository(PhotOnContext _dbContext): base(_dbContext)
+        internal PhotOnContext _dbContext;
+        public PublicationRepository(PhotOnContext dbContext): base(dbContext)
         {
-            this._dbSet = _dbContext.Set<Publication>();
+            this._dbSet = dbContext.Set<Publication>();
+            _dbContext = dbContext;
+        }
+
+        public void BuyPublication(int user, decimal sum) 
+        {
+            
+        }
+
+        public void AddLikeToPublication(string userId, int publicationId) 
+        {
+            var like = new Like()
+            {
+                UserId = userId,
+                PublicationId = publicationId
+            };
+
+            _dbContext.Likes.Add(like);
+        }
+
+        public void SavePublication(string userId, int publicationId)
+        {
+            var saved = new SavedPublication()
+            {
+                UserId = userId,
+                PublicationId = publicationId
+            };
+
+            _dbContext.SavedPublications.Add(saved);
         }
 
         public IEnumerable<Publication> Find(Expression<Func<Publication, bool>> predicate)

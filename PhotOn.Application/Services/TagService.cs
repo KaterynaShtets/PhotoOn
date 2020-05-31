@@ -26,7 +26,7 @@ namespace PhotOn.Application.Services
             try
             {
                 var tag = ObjectMapper.Mapper.Map<Tag>(tagDto);
-                _db.TagRepository.Add(tag);
+                _db.Tags.Add(tag);
                 _db.Save();
             }
             catch
@@ -40,7 +40,7 @@ namespace PhotOn.Application.Services
             try
             {
                 var tag = ObjectMapper.Mapper.Map<Tag>(tagDto);
-                _db.TagRepository.Update(tag);
+                _db.Tags.Update(tag);
                 _db.Save();
             }
             catch
@@ -51,19 +51,19 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<TagDto> GetAllTags()
         {
-            var tags = _db.TagRepository.GetAll();
+            var tags = _db.Tags.GetAll();
             return ObjectMapper.Mapper.Map<IEnumerable<TagDto>>(tags);
         }
 
         public TagDto GetTag(int id)
         {
-            var tag = _db.TagRepository.Get(id);
+            var tag = _db.Tags.Get(id);
             return ObjectMapper.Mapper.Map<TagDto>(tag);
         }
 
         public void SoftDeleteTag(int id)
         {
-            _db.TagRepository.SoftDelete(id);
+            _db.Tags.SoftDelete(id);
         }
     }
 }
