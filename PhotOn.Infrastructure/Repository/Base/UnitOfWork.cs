@@ -11,7 +11,8 @@ namespace PhotOn.Infrastructure.Repository.Base
     {
         private readonly PhotOnContext _db;
         private  IPublicationRepository _publicatonRepository;
-
+        private ITagRepository _tagRepository;
+        private IEquipmentRepository _equipmentRepository;
         public UnitOfWork(PhotOnContext db)
         {
             _db = db;
@@ -21,6 +22,14 @@ namespace PhotOn.Infrastructure.Repository.Base
         {
             get { return _publicatonRepository = _publicatonRepository ?? new PublicationRepository(_db); }
         }
+
+        public ITagRepository TagRepository 
+        { 
+            get { return _tagRepository = _tagRepository ?? new TagRepository(_db); }
+
+        }
+
+        public IEquipmentRepository EquipmentRepository => throw new NotImplementedException();
 
         //public IUserRepository UserRepository
         //{
