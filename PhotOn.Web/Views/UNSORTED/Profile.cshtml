@@ -1,0 +1,53 @@
+﻿@model PhotOn.Application.Model.ProfileUserPageModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<!-- separator -->
+<img src="icons/separator.png" style="width: 100%;">
+
+<hr>
+<h1 style="text-align: center;">Welcome, @User.Identity.Name!</h1>
+<hr>
+
+@*tabs selector*@
+<ul class="nav nav-tabs justify-content-center" style="margin-top:10px;">
+    <li class="nav-item">
+        <a class="nav-link active" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#my_publications">
+            My publications
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#saved_publications">
+            Liked publications
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#bought_publications">
+            Saved publications
+        </a>
+    </li>
+</ul>
+
+@*tabs*@
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="my_publications">
+        <div class="container">
+            <partial name="publication_list_partial" model="Model.PersonalPublications" />
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="saved_publications">
+        <div class="container">
+            <partial name="publication_list_partial" model="Model.LikedPublications" />
+        </div>
+    </div>
+    <div class="tab-pane fade" id="bought_publications">
+        <div class="container">
+            <partial name="publication_list_partial" model="Model.SavedPublications" />
+        </div>
+    </div>
+</div>
+
+<hr>
+<!-- separator -->
+<img src="icons/separator.png" style="width: 100%;">
