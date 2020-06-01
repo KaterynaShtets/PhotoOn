@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Balance";
+}
+
+    <div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
+        <!-- possible values -->
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8" style="padding: 0 40px;">
+                <!-- amator -->
+                <div style="display:inline-block;width: 33%;text-align: center;background-color: white;padding:20px;border-radius: 10px;border:solid .5px #b09b9b;">
+                    <img src="icons/balance_amatour.png" width="180px;">
+                    <h3>15$</h3>
+                    <form asp-controller="" asp-action="" method="post">
+                        <input type="hidden" name="sum" value="15">
+                        <input type="submit" value="Replenish!" class="btn btn-primary" style="display: block;background-color: #f7a41d;border-radius: 10px;border:none;">
+                    </form>
+                </div>
+                <!-- proffesional -->
+                <div style="display:inline-block;width: 33%;text-align: center;background-color: white;padding:50px 20px;border-radius: 10px;border:solid .5px #b09b9b;">
+                    <img src="icons/balance_proffesional.png" width="180px;">
+                    <h3>150$</h3>
+                    <form asp-controller="" asp-action="" method="post">
+                        <input type="hidden" name="sum" value="150">
+                        <input type="submit" value="Replenish!" class="btn btn-primary" style="display: block;background-color: #f7a41d;border-radius: 10px;border:none;">
+                    </form>
+                </div>
+                <!-- middle -->
+                <div style="display:inline-block;width: 33%;text-align: center;background-color: white;padding:20px;border-radius: 10px;border:solid .5px #b09b9b;">
+                    <img src="icons/balance_middle.png" width="180px;">
+                    <h3>50$</h3>
+                    <form asp-controller="" asp-action="" method="post">
+                        <input type="hidden" name="sum" value="50">
+                        <input type="submit" value="Replenish!" class="btn btn-primary" style="display: block;background-color: #f7a41d;border-radius: 10px;border:none;">
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <!-- custom input -->
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8" style="padding: 0 40px;text-align: center;">
+                <h2 style="color:#092c5d">Choose your sum:</h2>
+                <form  asp-controller="" asp-action="">
+                    <input type="number" name="sum" class="form-control"><br>
+                    <input type="submit" value="Submit!" class="btn btn-primary" style="background-color: #f7a41d;border-radius: 10px;border:none;font-size: x-large;
+    padding: .5em 3em;">
+                </form>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>

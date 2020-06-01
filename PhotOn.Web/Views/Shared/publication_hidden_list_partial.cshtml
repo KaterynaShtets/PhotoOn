@@ -3,7 +3,14 @@
 <div id="pubs_hidden" style="display:none;">
     @foreach (var p in Model)
     {
-        <partial name="publication_hidden_partial" model="p" />
+    <form class="pub_hidden">
+        <input type="text" name="id" value="@p.Id" />
+        <input type="text" name="title" value="@p.Title" />
+        <input type="text" name="coordX" value="@p.coordX" />
+        <input type="text" name="coordY" value="@p.coordY" />
+        <input type="text" name="imageLink" value="@p.ImageLink" />
+        <input type="text" name="price" value="@p.Price" />
+    </form>
     }
 </div>
 
