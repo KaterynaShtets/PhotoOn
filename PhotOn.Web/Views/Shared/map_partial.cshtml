@@ -1,0 +1,72 @@
+﻿@model bool
+
+<div id="map" style="height: 700px"></div>
+
+<script src="js/config.js"></script>
+<script src="js/Coords.js"></script>
+<script src="js/Marker.js"></script>
+<script src="js/MapAdapter.js"></script>
+
+<script>
+	/*
+		module may be used either for DISPLAYING MARKERS or
+		for INPUTTING COORDINATES by dragging a marker
+	*/
+@if (Model)
+{
+	<text>
+	const INPUT_MODE = true;
+	</text>
+}
+else
+{
+	<text>
+	const INPUT_MODE = false;
+    </text>
+}
+	let map;
+	let map_input = (function(){
+		let input_marker; // google marker
+
+		function set(m)
+		{
+			input_marker = m;
+		}
+
+		function getCoords()
+		{
+			return new Coords(
+				input_marker.position.lat(),
+				input_marker.position.lng()
+			);
+		}
+		return {set, getCoords};
+	})();
+
+	async function initMap() {
+		const node = document.getElementById('map');
+		const coords_center = await Coords.getCurrentCoords(CONFIG.latitude, CONFIG.longtitude);
+		map = new MapAdapter(node, coords_center, CONFIG.zoom_initial, CONFIG.mapStyle);
+
+		if (INPUT_MODE) {
+			let inputMarker = new Marker(undefined, "Input marker", coords_center);
+			map_input.set(map.addDraggableMarker(inputMarker));
+		} else {
+			const markers = getMarkers();
+			map.addMarker(...markers);
+		}
+	}
+
+	function getMarkers()
+	{
+		// to be implemented
+		return [
+			new Marker(12, "home", new Coords(55, 31), "pics/p.png", 15),
+			new Marker(12, "home", new Coords(56, 32), "pics/p.png", 15),
+			new Marker(12, "home", new Coords(57, 33), "pics/p.png", 15)
+		];
+	}
+</script>
+
+<!-- gcp api -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCATD1dsVMoNA5em6tycG-L5fcItqLc9js&callback=initMap"></script>
