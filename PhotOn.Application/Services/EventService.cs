@@ -51,7 +51,7 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<EventDto> GetAllEvents()
         {
-            var events = _db.Equipments.GetAll();
+            var events = _db.Events.GetAll();
                 return ObjectMapper.Mapper.Map<IEnumerable<EventDto>>(events);
         }
 

@@ -95,6 +95,7 @@ namespace PhotOn.Web
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
             services.AddScoped<IUtilService, UtilService>();
+            services.AddScoped<IEventService, EventService>();
 
             // Add Web Layer
             services.AddAutoMapper(typeof(Startup));
