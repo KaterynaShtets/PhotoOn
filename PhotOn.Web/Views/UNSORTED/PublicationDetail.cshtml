@@ -1,0 +1,105 @@
+﻿@model PhotOn.Web.ViewModels.PublicationViewModel
+@{
+    ViewData["Title"] = "PublicationDetail";
+}
+
+
+<!-- separator -->
+<img src="icons/separator.png" style="width: 100%;">
+
+<div class="container">
+    <div class="row" style="padding: 10px 0;">
+        @*picture and likes*@
+        <div class="col-sm-5">
+            <img src="@Model.ImageLink" style="width: 100%;border: 2px solid #c7c7c7;border-radius: 10px;">
+            <p style="text-align: center;margin-bottom: 0;margin-top: 10px;font-size: large;color: green;">
+                @Model.LikeCount like(-s)
+            </p>
+        </div>
+
+        @*main info*@
+        <div class="col-sm-7">
+            <h3>@Model.Title</h3>
+
+            <hr>
+
+            <p style="display: inline-block;">
+                <b>Tags:</b> 
+            </p>
+            <div style="display: inline-block;">
+                @foreach (var tag in Model.TagModels)
+                {
+                    <a class="badge badge-success">@tag.Title</a>
+                }
+            </div>
+
+            <p><b>Season:</b> @Model.Season.ToString()</p>
+
+            <p><b>Author:</b> @Model.User.Email</p>
+
+            <p><b>Description:</b> @Model.TextDescription</p>
+            <p><b>Price:</b> @Model.Price$</p>
+        </div>
+
+        @*additional info*@
+        <div class="col-sm-12">
+            <br>
+
+            <div class="accordion" id="accordionExample">
+                @*equipment*@
+                <div class="card">
+                    <div class="card-header" id="headingOne" style="padding: 10px;background-color: white;">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: black;">
+                                Equipment
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <ul>
+                                @foreach (var eq in Model.EquipmentModels)
+                                {
+                                    <li>@eq.Title</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @*map*@
+                <div class="card">
+                    <div class="card-header" id="headingTwo" style="padding: 10px;background-color: white;">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: black;">
+                                Location
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <partial name="publication_hidden_list_partial" model="new List<PublicationViewModel>() { Model }" />
+                            <partial name="map_partial" model="false" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-12" style="padding: 10px 0;text-align: center;">
+            <form method="post" style="display: inline-block;">
+                <input type="hidden" name="publicationId" value="@Model.Id">
+                <input type="submit" value="Add to saved publications" class="btn btn-success">
+            </form>
+            <form method="post" style="display: inline-block;">
+                <input type="hidden" name="publicationId" value="@Model.Id">
+                <input type="submit" value="Buy publication" class="btn btn-primary">
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- separator -->
+<img src="icons/separator.png" style="width: 100%;">
