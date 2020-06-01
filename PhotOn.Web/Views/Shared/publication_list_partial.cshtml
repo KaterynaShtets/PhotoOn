@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<PhotOn.Web.ViewModels.PublicationViewModel>
 
-<div class="container">
-    <div class="row">
-        @foreach (var p in Model)
-        {
-            <partial name="publication_partial" model="p"/>
-        }
-    </div>
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <partial name="publication_partial" model="p" />
+    }
 </div>

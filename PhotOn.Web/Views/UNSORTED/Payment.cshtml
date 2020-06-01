@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+
+<div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" style="padding: 40px;background-color: #ffffffe3;border: solid 1px black;text-align: center;">
+
+            <h1>Payment</h1>
+
+            <hr>
+
+            <table style="text-align: left;width: 100%;">
+                <tr>
+                    <td>
+                        <h3>
+                            Your balance:
+                        </h3>
+                    </td>
+                    <td style="text-align: right;">
+                        <h3><b style="color: #55BC75;">23$</b></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3>
+                            Sum of purchase:
+                        </h3>
+                    </td>
+                    <td style="text-align: right;">
+                        <h3><b style="color: #55BC75;">23$</b></h3>
+                    </td>
+                </tr>
+            </table>
+
+            <br><br>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="background-color: #f7a825; font-size:20px; border:none;padding: 10px 30px;">
+                Confirm
+            </button>
+
+            <br>
+            <br>
+
+            <a href="#">Back</a>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm the payment?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #f7a825; font-size:20px; border:none;">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

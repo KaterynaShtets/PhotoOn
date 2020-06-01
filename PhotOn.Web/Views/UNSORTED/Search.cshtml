@@ -1,0 +1,117 @@
+﻿@model IEnumerable<PhotOn.Web.ViewModels.PublicationViewModel>
+@{
+    ViewData["Title"] = "Search";
+}
+
+<!-- separator -->
+<img src="icons/separator.png" style="width: 100%;">
+
+
+<ul class="nav nav-tabs justify-content-center" style="margin-top:10px;">
+    <li class="nav-item">
+        <a class="nav-link active" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#map_view">Map</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#list_view">Feed</a>
+    </li>
+</ul>
+
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="map_view">
+        <div class="container">
+            <br>
+            <!-- search, filter from -->
+            <div class="row">
+                <!-- search form -->
+                <div class="col-sm-6">
+                    <form>
+                        <label>
+                            Search:
+                            <input type="text" name="search_value" required>
+                        </label>
+                        <input type="submit" value="Search!">
+                    </form>
+                </div>
+
+                <!-- filter by tag form -->
+                <div class="col-sm-6" style="text-align: right;">
+                    <form>
+                        <label>
+                            Filter:
+                            @{
+                                var tags = Model.SelectMany(p => p.TagModels).Distinct();
+                            }
+                            <select name="tagId" required>
+                                @foreach (var tag in tags)
+                                {
+                                    <option value="@tag.Id">@tag.Title</option>
+                                }
+                            </select>
+                        </label>
+                        <input type="submit" value="Filter!">
+                    </form>
+                </div>
+            </div>
+            <hr>
+
+            <partial name="publication_hidden_list_partial" model="Model" />
+            <partial name="map_partial" model="false" />
+
+            <hr>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="list_view">
+        <div class="container">
+            <br>
+            <!-- search, sort, filter form -->
+            <div class="row">
+                <!-- search form -->
+                <div class="col-sm-4">
+                    <form>
+                        <label>
+                            Seacrh:
+                            <input type="text" name="search_value" required>
+                        </label>
+                        <input type="submit" value="Search!">
+                    </form>
+                </div>
+
+                <!-- sort form -->
+                <div class="col-sm-4" style="text-align: center;">
+                    <p style="display: inline-block;">Sort by:</p>
+                    <a asp-controller="Publication" asp-action="@*добавить*@" asp-route-sortBy="price">Price</a>
+                    <a asp-controller="Publication" asp-action="" asp-route-sortBy="likes">Likes</a>
+                    <a asp-controller="Publication" asp-action="" asp-route-sortBy="tags">Tags count</a>
+                </div>
+
+                <!-- filter by tag form -->
+                <div class="col-sm-4" style="text-align: right;">
+                    <form>
+                        <label>
+                            Filter:
+                            <select name="tagId" required>
+                                @foreach (var tag in tags)
+                                {
+                                    <option value="@tag.Id">@tag.Title</option>
+                                }
+                            </select>
+                        </label>
+                        <input type="submit" value="Filter!">
+                    </form>
+                </div>
+            </div>
+            <hr>
+
+            <!-- posts here -->
+            <partial name="publication_list_partial" model="Model" />
+            <hr>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- separator -->
+<img src="icons/separator.png" style="width: 100%;">
