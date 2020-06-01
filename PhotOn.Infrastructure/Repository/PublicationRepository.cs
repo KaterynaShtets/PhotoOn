@@ -23,11 +23,6 @@ namespace PhotOn.Infrastructure.Repository
             _dbContext = dbContext;
         }
 
-        public void BuyPublication(int user, decimal sum) 
-        {
-            
-        }
-
         public void AddLikeToPublication(string userId, int publicationId) 
         {
             var like = new Like()
@@ -48,6 +43,44 @@ namespace PhotOn.Infrastructure.Repository
             };
 
             _dbContext.SavedPublications.Add(saved);
+        }
+
+        public void AddTagToPublication(int tagId, int publicationId) 
+        {
+            var tagToPunlication = new PublicationTag()
+            {
+                TagId = tagId,
+                PublicationId = publicationId
+            };
+
+            _dbContext.PublicationTags.Add(tagToPunlication);
+        }
+
+        public void AddEquipmentToPublication(int equipmentId, int publicationId) 
+        {
+            var equipmentToPublication = new PublicationEquipment()
+            {
+                EquipmentId = equipmentId,
+                PublicationId = publicationId
+            };
+
+            _dbContext.PublicationEquipments.Add(equipmentToPublication);
+        }
+
+        public void BuyPublication(string userId, int publicationId)
+        {
+            var purchase = new PublicationPurchase()
+            {
+                UserId = userId,
+                PublicationId = publicationId
+            };
+
+            _dbContext.PublicationPurchases.Add(purchase);
+        }
+
+        public void ApprovePublication(int publicationId) 
+        {
+            _dbSet.SingleOrDefault(p => p.Id == publicationId).IsApproved = true;
         }
 
         public IEnumerable<Publication> Find(Expression<Func<Publication, bool>> predicate)
@@ -90,6 +123,25 @@ namespace PhotOn.Infrastructure.Repository
                         .Where(p=>p.IsDeleted == false);
         }
 
+        public IEnumerable<Publication> GetAllPresentApproved()
+        {
+            return _dbSet.Include(p => p.User)
+                        .Include(p => p.PublicationEquipments).ThenInclude(p => p.Equipment)
+                        .Include(p => p.PublicationPurchases)
+                        .Include(p => p.PublicationTags).ThenInclude(p => p.Tag)
+                        .Include(p => p.SavedPublications)
+                        .Where(p => p.IsDeleted == false && p.IsApproved == true);
+        }
+
+        public IEnumerable<Publication> GetAllPresentDisApproved()
+        {
+            return _dbSet.Include(p => p.User)
+                        .Include(p => p.PublicationEquipments).ThenInclude(p => p.Equipment)
+                        .Include(p => p.PublicationPurchases)
+                        .Include(p => p.PublicationTags).ThenInclude(p => p.Tag)
+                        .Include(p => p.SavedPublications)
+                        .Where(p => p.IsDeleted == false && p.IsApproved == false);
+        }
 
         public Publication SingleOrDefault(Expression<Func<Publication, bool>> predicate)
         {

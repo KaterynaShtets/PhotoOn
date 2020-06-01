@@ -1,13 +1,15 @@
-﻿using System;
+﻿using PhotOn.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PhotOn.Application.Interfaces
 {
-    public interface IPurchaseService
+    public interface IUtilService
     {
-        public void ReplenishBalance(decimal sum);
-        public void DebitFromAccout(decimal sum);
-
+        bool CheckBalance(int balance, int sum);
+        void DebitFromAccout(int sum);
+        public void ReplenishBalance(int sum);
     }
 }

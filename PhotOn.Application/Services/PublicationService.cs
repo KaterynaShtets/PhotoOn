@@ -19,15 +19,19 @@ namespace PhotOn.Application.Services
     public class PublicationService : IPublicationService
     {
         private readonly IUnitOfWork _db;
-        private readonly ILogger<PublicationService> _logger;
+        private readonly IUserService _userService;
         private readonly IFileStorageServcie _fileStorageService;
+        private readonly IUtilService _utilService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<PublicationService> _logger;
 
         private readonly string containerName = "publications";
 
-        public PublicationService(IUnitOfWork unitOfWork, ILogger<PublicationService> logger, IFileStorageServcie fileStorageServcie, IHttpContextAccessor httpContextAccessor)
+        public PublicationService(IUnitOfWork unitOfWork, IUserService userService, IUtilService utilService, ILogger<PublicationService> logger, IFileStorageServcie fileStorageServcie, IHttpContextAccessor httpContextAccessor)
         {
             _db = unitOfWork;
+            _userService = userService;
+            _utilService = utilService;
             _logger = logger;
             _fileStorageService = fileStorageServcie;
             _httpContextAccessor = httpContextAccessor;
@@ -110,7 +114,7 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<PublicationDetailsDto> GetAllPublications()
         {
-            var publicationList = _db.Publications.GetAll();
+            var publicationList = _db.Publications.GetAllPresent().ToList();
             var mapped = ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(publicationList);
             return mapped;
         }
@@ -161,34 +165,74 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<PublicationDetailsDto> GetUserLikedPublications(string userId) 
         {
-            var likedPublications =  _db.Publications.GetAllPresent().Where(p => p.Likes.Select(l => l.UserId).Contains(userId));
+            var likedPublications =  _db.Publications
+                .GetAllPresentApproved()
+                .Where(p => p.Likes.Select(l => l.UserId)
+                .Contains(userId));
+
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
         }
 
         public IEnumerable<PublicationDetailsDto> GetUserSavedPublications(string userId)
         {
-            var likedPublications = _db.Publications.GetAllPresent().Where(p => p.SavedPublications.Select(l => l.UserId).Contains(userId));
+            var likedPublications = _db.Publications
+                .GetAllPresentApproved()
+                .Where(p => p.SavedPublications.Select(l => l.UserId)
+                .Contains(userId));
+
+            return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
+        }
+
+        public IEnumerable<PublicationDetailsDto> GetUserPurchasedPublications(string userId)
+        {
+            var likedPublications = _db.Publications
+                .GetAllPresentApproved()
+                .Where(p => p.PublicationPurchases.Select(l => l.UserId)
+                .Contains(userId));
+
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
         }
 
         public IEnumerable<PublicationDetailsDto> GetUserPublications(string userId)
         {
-            var likedPublications = _db.Publications.GetAllPresent().Where(p => p.UserId == userId);
-            return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
+            var userPublications = _db.Publications
+                .GetAllPresentApproved()
+                .Where(p => p.UserId == userId);
+
+            return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(userPublications);
         }
 
         public void LikePublication(int id)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = _httpContextAccessor.HttpContext.User
+                .FindFirst(ClaimTypes.NameIdentifier).Value;
 
             _db.Publications.AddLikeToPublication(userId, id);
+
+            _db.Save();
         }
 
         public void SavePublication(int id)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = _httpContextAccessor.HttpContext.User
+                .FindFirst(ClaimTypes.NameIdentifier).Value;
 
             _db.Publications.SavePublication(userId, id);
+
+            _db.Save();
+        }
+
+        public  void BuyPublication(string userId, int publicationId)
+        {
+            try
+            {
+                _db.Publications.BuyPublication(userId, publicationId);
+                _db.Save();
+            }
+            catch 
+            {
+                _logger.LogWarning("Error in buyPublication");
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace PhotOn.Application.Services
 {
@@ -20,12 +21,14 @@ namespace PhotOn.Application.Services
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(IConfiguration configuration, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        public UserService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _configuration = configuration;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public UserToken CreateToken(string email)
@@ -59,6 +62,14 @@ namespace PhotOn.Application.Services
             };
         }
 
-        
+        public string GetCurrentUserId()
+        {
+            return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        }
+
+        public  async Task<ApplicationUser> GetCurrentUser() 
+        {
+            return  await _userManager.FindByIdAsync(GetCurrentUserId());
+        }
     }
 }

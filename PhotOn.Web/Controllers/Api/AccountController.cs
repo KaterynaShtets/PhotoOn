@@ -20,9 +20,9 @@ using PhotoOn.Application.Models;
 
 namespace PhotOn.Web.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Route("api/account")]
     [ApiController]
-    public class ApiAccountController : ControllerBase
+    public class AccountController : Controller
     {
         private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -30,7 +30,7 @@ namespace PhotOn.Web.Controllers.Api
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
 
-        public ApiAccountController(IUserService userService, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> manager, SignInManager<ApplicationUser> signInManager, IMapper mapper)
+        public AccountController(IUserService userService, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> manager, SignInManager<ApplicationUser> signInManager, IMapper mapper)
         {
             _userService = userService;
             _userManager = manager;
@@ -39,7 +39,7 @@ namespace PhotOn.Web.Controllers.Api
             _mapper = mapper;
         }
 
-        [HttpPost("Create")]
+        [HttpPost("signup")]
         public async Task<ActionResult<UserToken>> Create([FromBody] UserCreationDto registrationModel)
         {
             var userEntity = new ApplicationUser
@@ -64,7 +64,7 @@ namespace PhotOn.Web.Controllers.Api
             }
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<ActionResult<UserToken>> Login([FromBody] UserCreationDto loginModel)
         {
             var result = await _signInManager.PasswordSignInAsync(
@@ -83,7 +83,7 @@ namespace PhotOn.Web.Controllers.Api
             }
         }
 
-        [HttpPost("RenewToken")]
+        [HttpPost("renewtoken")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<UserToken> Renew()
         {
@@ -100,7 +100,7 @@ namespace PhotOn.Web.Controllers.Api
         }
 
 
-        [HttpGet("Roles")]
+        [HttpGet("roles")]
         public async Task<ActionResult<IEnumerable<string>>> GetRoles()
         {
             List<string> roles = new List<string>();
@@ -108,7 +108,7 @@ namespace PhotOn.Web.Controllers.Api
             return roles;
         }
 
-        [HttpGet("AssignRole")]
+        [HttpGet("assignRole")]
         public async Task<ActionResult> AssignRole(EditRoleDto editRoleModel)
         {
             var user = await _userManager.FindByIdAsync(editRoleModel.UserId);

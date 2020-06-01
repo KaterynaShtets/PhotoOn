@@ -11,7 +11,7 @@ namespace PhotOn.Application.Dtos
         public int Id { get; set; }
         public UserDto User { get; set; }
         public string Title { get; set; }
-        public decimal? Price { get; set; }
+        public int  Price { get; set; }
         public decimal coordX { get; set; }
         public decimal coordY { get; set; }
         public DateTime PublicationDate { get; set; }

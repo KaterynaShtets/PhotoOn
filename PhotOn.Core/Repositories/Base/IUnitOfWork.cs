@@ -10,6 +10,7 @@ namespace PhotOn.Core.Repositories
     public interface IUnitOfWork
     {
         IPublicationRepository Publications { get; }
+        IEventRepository Events { get; }
         ITagRepository Tags { get; }
         IEquipmentRepository Equipments{ get; }
        

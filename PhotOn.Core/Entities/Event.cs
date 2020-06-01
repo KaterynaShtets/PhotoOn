@@ -14,6 +14,8 @@ namespace PhotOn.Core.Entities
         public DateTime DateTime { get; set; }
         public string TextDescription { get; set; }
         public string AwardTitle { get; set; }
+        public Tag Tag { get; set; }
+        public int TagId { get; set; }
         public ICollection<UserEvent> UserEvents { get; set; }
 
     }

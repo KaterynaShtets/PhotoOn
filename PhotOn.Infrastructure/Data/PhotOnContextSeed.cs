@@ -43,6 +43,13 @@ namespace PhotOn.Infrastructure.Data
                     photonContext.Publications.AddRange(GetPreconfiguredPublications());
                     await photonContext.SaveChangesAsync();
                 }
+
+                if (!photonContext.Events.Any())
+                {
+                    photonContext.Events.AddRange(GetPreconfigureEvents());
+                    await photonContext.SaveChangesAsync();
+                }
+
                 if (!photonContext.Equipment.Any())
                 {
                     photonContext.Equipment.AddRange(GetPreconfiguredEquipment());
@@ -85,7 +92,7 @@ namespace PhotOn.Infrastructure.Data
             {
                 new Publication() {
                     Title = "Kharkiv",
-                    Price = 0m,
+                    Price = 0,
                     coordX = 1.234m,
                     coordY = 3.454m,
                     PublicationDate = new DateTime(2020, 02, 23),
@@ -97,7 +104,7 @@ namespace PhotOn.Infrastructure.Data
                 },
                new Publication() {
                     Title = "London",
-                    Price = 0m,
+                    Price = 0,
                     coordX = 1.234m,
                     coordY = 3.454m,
                     PublicationDate = new DateTime(2020, 02, 23),
@@ -109,7 +116,7 @@ namespace PhotOn.Infrastructure.Data
                 },
                new Publication() {
                     Title = "Paris",
-                    Price = 0m,
+                    Price = 0,
                     coordX = 1.234m,
                     coordY = 3.454m,
                     PublicationDate = new DateTime(2020, 02, 23),
@@ -121,7 +128,7 @@ namespace PhotOn.Infrastructure.Data
                 },
                new Publication() {
                     Title = "Kiev",
-                    Price = 0m,
+                    Price = 0,
                     coordX = 1.234m,
                     coordY = 3.454m,
                     PublicationDate = new DateTime(2020, 02, 23),
@@ -206,6 +213,20 @@ namespace PhotOn.Infrastructure.Data
                     Id = "1dbecfbd-1cb2-4364-a2c1-f0734e8ec909",
                     Name = "Expert",
                 },
+            };
+        }
+
+        private static IEnumerable<Event> GetPreconfigureEvents()
+        {
+            return new List<Event>()
+            {
+                new Event()
+                {
+                    AwardTitle = "BestShot",
+                    TagId = 3,
+                    TextDescription = "Add 3 tag",
+                    DateTime = new DateTime(2020,06,12)
+                }
             };
         }
 

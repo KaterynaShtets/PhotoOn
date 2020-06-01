@@ -23,6 +23,7 @@ using PhotOn.Core.Repositories.Base;
 using PhotOn.Infrastructure.Data;
 using PhotOn.Infrastructure.Repository;
 using PhotOn.Infrastructure.Repository.Base;
+using PhotOn.Web.Service;
 
 namespace PhotOn.Web
 {
@@ -91,6 +92,9 @@ namespace PhotOn.Web
             services.AddScoped<IPublicationService, PublicationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IFileStorageServcie, AzureStorageService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IEquipmentService, EquipmentService>();
+            services.AddScoped<IUtilService, UtilService>();
 
             // Add Web Layer
             services.AddAutoMapper(typeof(Startup));
@@ -124,6 +128,23 @@ namespace PhotOn.Web
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
                     };
                 });
+
+
+            services.AddAuthentication()
+                .AddFacebook(options =>
+            {
+                options.AppId = Configuration["FacebookAppId"];
+                options.AppSecret = Configuration["FacebookAppSecret"];
+            })
+                .AddGoogle(options =>
+                { 
+                    options.ClientId = Configuration["GoogleClientId"];
+                    options.ClientSecret = Configuration["GoogleClientSecret"];
+                }); 
+
+            services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
+
+            services.AddScoped<IEmailSender, SmptEmailSender>();
 
             services.Configure<IdentityOptions>(options => {
 

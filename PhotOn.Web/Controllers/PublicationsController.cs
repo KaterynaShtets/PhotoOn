@@ -27,7 +27,7 @@ namespace PhotOn.Web.Controllers
 
             var publicationDetailsDtos = _publicationService.GetAllPublications();
             var publications =
-                WebMapper.Mapper.Map<IEnumerable<PublicationViewModel>>(publicationDetailsDtos);
+                _mapper.Map<IEnumerable<PublicationViewModel>>(publicationDetailsDtos);
             publicationsViewModel.Publications = publications;
 
             return View("PublicationList", publicationsViewModel);

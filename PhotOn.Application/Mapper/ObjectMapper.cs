@@ -38,9 +38,10 @@ namespace PhotOn.Application.Mapper
                 .ForMember(x => x.ImageLink, options => options.Ignore());
             CreateMap<Publication, PublicationDetailsDto>()
                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+               .ForMember(dest=>dest.ImageLink, opt => opt.MapFrom(src => src.ImageLink))
                .ForMember(dest => dest.EquipmentModels, opt => opt.MapFrom(src => src.PublicationEquipments.Select(e => e.Equipment)))
                .ForMember(dest => dest.TagModels, opt => opt.MapFrom(src => src.PublicationTags.Select(e => e.Tag))).ReverseMap();
-
+            CreateMap<EventDto, Event>().ReverseMap();
         }
     }
 }

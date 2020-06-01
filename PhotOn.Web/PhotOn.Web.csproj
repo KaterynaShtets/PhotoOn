@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>a2d105db-41a9-4b36-a368-8352ac735df5</UserSecretsId>
   </PropertyGroup>
 
 
@@ -9,7 +10,6 @@
     <Folder Include="Models\Events\" />
     <Folder Include="Models\Publications\" />
     <Folder Include="Models\Users\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
@@ -17,6 +17,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />

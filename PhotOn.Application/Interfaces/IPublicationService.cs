@@ -18,8 +18,14 @@ namespace PhotOn.Application.Interfaces
         void Edit(int id, PublicationCreationDto carDto);
         void Delete(int id);
 
+        void LikePublication(int id);
+        void SavePublication(int id);
+
+        void BuyPublication(string userId, int publicationId);
+
         IEnumerable<PublicationDetailsDto> GetUserLikedPublications(string userId);
         IEnumerable<PublicationDetailsDto> GetUserSavedPublications(string userId);
         IEnumerable<PublicationDetailsDto> GetUserPublications(string userId);
+        IEnumerable<PublicationDetailsDto> GetUserPurchasedPublications(string userId);
     }
 }

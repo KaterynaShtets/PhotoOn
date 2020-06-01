@@ -12,7 +12,16 @@ namespace PhotOn.Core.Repositories
     {
         void AddLikeToPublication(string userId, int publicationId);
         void SavePublication(string userId, int publicationId);
+
+        void AddTagToPublication(int tagId, int publicationId);
+        void AddEquipmentToPublication(int equipmentId, int publicationId);
+
+        void BuyPublication(string userId, int publicationId);
+
         IEnumerable<Publication> GetAllPresent();
+        IEnumerable<Publication> GetAllPresentApproved();
+        IEnumerable<Publication> GetAllPresentDisApproved();
+
         IEnumerable<Publication> Find(Expression<Func<Publication, bool>> predicate);
         Publication SingleOrDefault(Expression<Func<Publication, bool>> predicate);
     }
