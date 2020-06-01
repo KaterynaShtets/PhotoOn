@@ -59,12 +59,21 @@ else
 
 	function getMarkers()
 	{
-		// to be implemented
-		return [
-			new Marker(12, "home", new Coords(55, 31), "pics/p.png", 15),
-			new Marker(12, "home", new Coords(56, 32), "pics/p.png", 15),
-			new Marker(12, "home", new Coords(57, 33), "pics/p.png", 15)
-		];
+		const root = document.getElementById('pubs_hidden');
+		let res = [];
+		for (let p of root.getElementsByClassName("pub_hidden")) {
+			res.push(new Marker(
+				Number(p.id.value),
+				p.title.value,
+				new Coords(
+                    Number(p.coordX.value),
+                    Number(p.coordY.value)
+				),
+				p.imageLink.value,
+				Number(p.price.value)
+			));
+		}
+		return res;
 	}
 </script>
 

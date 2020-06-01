@@ -1,0 +1,9 @@
+﻿@model IEnumerable<PhotOn.Web.ViewModels.PublicationViewModel>
+
+<div id="pubs_hidden" style="display:none;">
+    @foreach (var p in Model)
+    {
+        <partial name="publication_hidden_partial" model="p" />
+    }
+</div>
+
