@@ -1,54 +1,69 @@
-﻿
+﻿@model PhotOn.Web.ViewModels.Account.SignUpViewModel
 @{
     ViewData["Title"] = "SignUp";
 }
 
-    <div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
+<div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
 
-        <br>
-        <br>
-        <br>
-        <br>
+    <br><br><br><br>
 
-        <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6" style="padding: 40px;background-color: #ffffffe3;border: solid 1px black;">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="padding: 40px;background-color: #ffffffe3;border: solid 1px black;">
 
-                <h1>Join PhotOn today!</h1>
-                <hr>
-                <a href="#" class="btn btn-primary">Use Google account</a>
-                or
-                <a href="#" class="btn btn-primary" style="background-color: #2f5277;border: none;">Use Facebook account</a>
-                or create a PhotOn account:
-                <hr>
+            <h1>Join PhotOn today!</h1>
 
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary">Join PhotOn!</button>
-                        </div>
-                        <div class="col" style="text-align: right;">
-                            Already have an account?
-                            <a href="#" class="btn btn-success">Log in!</a>
-                        </div>
-                    </div>
-                </form>
+            <hr>
+
+            <form asp-controller="Account" asp-action="ExternalLogin" method="post">
+                <div class="form-group">
+                    <button type="submit" name="provider" value="Google" class="btn btn-primary"> Login with Google</button>
+                    or
+                    <button type="submit" name="provider" value="Facebook" class="btn btn-primary"> Login with Facebook</button>
+                    or create a PhotOn account:
+                </div>
+            </form>   
+
+            <hr>
+
+            <form asp-controller="Account" asp-action="Signup" method="post">
+                @Html.ValidationSummary()
+
+                <div class="form-group col-4">
+                    <label asp-for="Email">Email:</label>
+                    <input type="text" asp-for="Email" class="form-control" />
+
+                    <small class="form-text text-muted">
+                        We'll never share your email with anyone else.
+                    </small>
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="Password">Password:</label>
+                    <input type="text" asp-for="Password" class="form-control" />
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="ConfirmPassword">Password:</label>
+                    <input type="text" asp-for="ConfirmPassword" class="form-control" />
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="DOB">DOB:</label>
+                    <input type="date" asp-for="DOB" class="form-control" asp-format="{0:yyyy-MM-dd}" />
+                    @Html.ValidationMessageFor(m => m.DOB)
+                </div>
+                <button type="submit" asp-action="Signup" class="btn btn-primary">Signup!</button>
+            </form>
+
+            <div class="alert alert-info">
+                If you already have an account, pelase <a asp-action="Signin">sign in</a>
             </div>
-            <div class="col-sm-3"></div>
+
         </div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
+        <div class="col-sm-3"></div>
     </div>
+
+    <br><br><br><br>
+
+</div>
