@@ -7,66 +7,94 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary my-nav-bar">
-            @Html.ActionLink("PhotOn", "Index", "Publications", new { area = "" }, new { @class = "navbar-brand" })
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item" asp-controller="Publications" asp-action="Index" >
-                        Photon
+    <!-- common header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="icons/logo.png" style="height: 80px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index" style="font-size: 20px;">Home</a>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="font-size: 20px;">Post place</a>
                     </li>
-                    <li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString() == "Index" & ViewContext.RouteData.Values["Controller"].ToString() == "Companies") ? "active" : "")">
-                        @Html.ActionLink("Companies", "Index", "Companies", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Publications" asp-action="Index" style="font-size: 20px;">Find place</a>
                     </li>
-                    <li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString() == "Index" & ViewContext.RouteData.Values["Controller"].ToString() == "Products") ? "active" : "")">
-                        @Html.ActionLink("Products", "Index", "Products", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                }
+            </ul>
+            <ul class="navbar-nav">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" style="font-size: 20px;">Balance</a>
                     </li>
-                    <li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString() == "Index" & ViewContext.RouteData.Values["Controller"].ToString() == "Instructions") ? "active" : "")">
-                        @Html.ActionLink("Instructions", "Index", "Instructions", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" style="font-size: 20px;">
+                            Profile
+                        </a>
                     </li>
-                    <li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString() == "Index" & ViewContext.RouteData.Values["Controller"].ToString() == "Parts") ? "active" : "")">
-                        @Html.ActionLink("Parts", "Index", "Parts", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                    <img src="icons/profile.svg" class="icon d-none d-lg-block" style="width: 28px;height: 28px;margin: auto;">
+                }
+                else
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" style="font-size: 20px;">
+                            Get started!
+                        </a>
                     </li>
-                    <li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString() == "About" & ViewContext.RouteData.Values["Controller"].ToString() == "Home") ? "active" : "")">
-                        @Html.ActionLink("About", "About", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                }
+            </ul>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <!-- common footer -->
+    <div class="container" style="max-width: 100%;">
+        <div class="row" style="padding: 10px 80px;">
+            <div class="col-sm-1"></div>
+
+            <!-- text -->
+            <div class="col-sm-3">
+                <img src="icons/logo.png" style="height: 110px;">
+            </div>
+            <!-- button -->
+            <div class="col-sm-7">
+                <ul style="list-style-type: none; margin: 0; padding: 10px 0 0 0;">
+                    <li style="display: inline-block;width: 30%;text-align: center;">
+                        <a asp-controller="Home" asp-action="Index" style="font-size: 20px;">Home</a>
                     </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if (!User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString() == "Login" & ViewContext.RouteData.Values["Controller"].ToString() == "Account") ? "active" : "")">
-                            @Html.ActionLink("Sign in", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                        <li style="display: inline-block;width: 30%;text-align: center;">
+                            <a href="#" style="font-size: 20px;">Post place </a>
                         </li>
-                        <li class="nav-item @((ViewContext.RouteData.Values["Action"].ToString() == "Register" & ViewContext.RouteData.Values["Controller"].ToString() == "Account") ? "active" : "")">
-                            @Html.ActionLink("Sign up", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                        <li style="display: inline-block;width: 30%;text-align: center;">
+                            <a href="#" style="font-size: 20px;">Find place </a>
                         </li>
                     }
-                    else
-                    {
-                        <li class="nav-item">
-                            @Html.ActionLink("Sign out", "Logout", "Account", routeValues: null, htmlAttributes: new { @class = "nav-link" })
-                        </li>
-                    }
+                    </ul>
+                <hr>
+                <ul style="list-style-type: none; margin: 0; padding: 5px 0 0 0;">
+                    <li style="display: inline-block;width: 100%;text-align: center;">
+                        <span href="#" style="font-size: 15px;">© 2020 Copyright</span>
+                    </li>
                 </ul>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+            <div class="col-sm-1"></div>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - PhotOn.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
     @RenderSection("Scripts", required: false)
 </body>
 </html>
