@@ -222,11 +222,14 @@ namespace PhotOn.Application.Services
             _db.Save();
         }
 
-        public  void BuyPublication(string userId, int publicationId)
+        public  void BuyPublication(ApplicationUser user, PublicationDetailsDto publication)
         {
             try
             {
-                _db.Publications.BuyPublication(userId, publicationId);
+                user.Balance -= publication.Price;
+                var author = publication.User;
+                author.Balance += Convert.ToInt32(Math.Floor(0.9 * publication.Price));
+                _db.Publications.BuyPublication(user.Id, publication.Id);
                 _db.Save();
             }
             catch 

@@ -21,7 +21,7 @@ namespace PhotOn.Application.Interfaces
         void LikePublication(int id);
         void SavePublication(int id);
 
-        void BuyPublication(string userId, int publicationId);
+        void BuyPublication(ApplicationUser user, PublicationDetailsDto publication);
 
         IEnumerable<PublicationDetailsDto> GetUserLikedPublications(string userId);
         IEnumerable<PublicationDetailsDto> GetUserSavedPublications(string userId);
