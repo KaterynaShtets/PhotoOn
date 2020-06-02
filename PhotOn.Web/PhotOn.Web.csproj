@@ -7,9 +7,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Models\Events\" />
-    <Folder Include="Models\Publications\" />
-    <Folder Include="Models\Users\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\icons\" />
   </ItemGroup>

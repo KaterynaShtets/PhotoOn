@@ -1,6 +1,6 @@
 using System;
 
-namespace PhotOn.Web.Models
+namespace PhotOn.Web.ViewModels
 {
     public class ErrorViewModel
     {

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PhotOn.Application.Dtos;
-using PhotOn.Application.Models;
 using PhotOn.Application.Validations;
-using PhotOn.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

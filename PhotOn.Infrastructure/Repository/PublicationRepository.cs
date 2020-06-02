@@ -83,6 +83,11 @@ namespace PhotOn.Infrastructure.Repository
             _dbSet.SingleOrDefault(p => p.Id == publicationId).IsApproved = true;
         }
 
+        public void RejectPublication(int publicationId)
+        {
+            _dbSet.SingleOrDefault(p => p.Id == publicationId).IsApproved = false;
+        }
+
         public IEnumerable<Publication> Find(Expression<Func<Publication, bool>> predicate)
         {
             return _dbSet

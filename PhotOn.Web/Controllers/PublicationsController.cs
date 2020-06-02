@@ -4,20 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 using PhotOn.Application.Dtos;
 using PhotOn.Application.Interfaces;
 using PhotOn.Web.Mapper;
-using PhotOn.Web.Models;
 using PhotOn.Web.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PhotOn.Web.Controllers
 {
     public class PublicationsController : Controller
     {
         private readonly IPublicationService _publicationService;
+        private readonly IUserService _userService;
+        private readonly IUtilService _utilService;
         private readonly IMapper _mapper;
 
-        public PublicationsController(IPublicationService publicationService, IMapper mapper)
+        public PublicationsController(IPublicationService publicationService, IUserService userService, IMapper mapper)
         {
             _publicationService = publicationService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -30,7 +33,7 @@ namespace PhotOn.Web.Controllers
                 _mapper.Map<IEnumerable<PublicationViewModel>>(publicationDetailsDtos);
             publicationsViewModel.Publications = publications;
 
-            return View("PublicationList", publicationsViewModel);
+            return View("UNSORTED/Main");
         }
 
         public ActionResult New()
@@ -102,6 +105,21 @@ namespace PhotOn.Web.Controllers
             _publicationService.Delete(publicationId);
 
             return RedirectToAction("Index", "Publications");
+        }
+
+        public async Task<ActionResult> BuyPublication(int id)
+        {
+            var publication = _publicationService.Get(id);
+            var user = await _userService.GetCurrentUser();
+            if (_utilService.CheckBalance(user.Balance, publication.Price))
+            {
+                _publicationService.BuyPublication(user, publication);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Not enough money on balance");
+            }
         }
     }
 }

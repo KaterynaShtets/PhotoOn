@@ -10,6 +10,10 @@ namespace PhotOn.Core.Repositories
 {
     public interface IPublicationRepository : IEditRepository<Publication>, IReadRepository<Publication>
     {
+
+        void ApprovePublication(int publicationId);
+        void RejectPublication(int publicationId);
+
         void AddLikeToPublication(string userId, int publicationId);
         void SavePublication(string userId, int publicationId);
 

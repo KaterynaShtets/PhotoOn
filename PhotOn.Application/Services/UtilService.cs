@@ -39,6 +39,7 @@ namespace PhotOn.Application.Services
             return true;
         }
 
+       
         public async void DebitFromAccout(int sum)
         {
             var user = await _userService.GetCurrentUser();
