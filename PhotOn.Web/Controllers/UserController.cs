@@ -31,9 +31,11 @@ namespace PhotOn.Web.Controllers
 
         public ActionResult<ProfileUserPageModel> SetProfile()
         {
-            var likedPublications = _publicationService.GetUserLikedPublications(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var savedPublications = _publicationService.GetUserSavedPublications(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var userPurchasedPublications = _publicationService.GetUserPurchasedPublications(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = _userService.GetCurrentUserId();
+
+            var likedPublications = _publicationService.GetUserLikedPublications(userId);
+            var savedPublications = _publicationService.GetUserSavedPublications(userId);
+            var userPurchasedPublications = _publicationService.GetUserPurchasedPublications(userId);
 
             var likedPublicationViewModels =
               _mapper.Map<IEnumerable<PublicationViewModel>>(likedPublications);
@@ -83,6 +85,16 @@ namespace PhotOn.Web.Controllers
                 var message = new MessageViewModel
                 {
                     Message = "Soory, only users older than 16 years old can make purchases"
+                };
+
+                return RedirectToAction("ErrorMessage", new { model = message });
+            }
+
+            if (_userService.CheckUserBalance(user.Balance, publication.Price))
+            {
+                var message = new MessageViewModel
+                {
+                    Message = "Soory, you don't hane anough mony to proceed purchase"
                 };
 
                 return RedirectToAction("ErrorMessage", new { model = message });

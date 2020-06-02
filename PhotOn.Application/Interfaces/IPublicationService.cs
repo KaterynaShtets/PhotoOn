@@ -19,7 +19,7 @@ namespace PhotOn.Application.Interfaces
         void Delete(int id);
 
         void LikePublication(int id);
-        void SavePublication(int id);
+        void SavePublication(string userId, int id);
 
         void BuyPublication(ApplicationUser user, PublicationDetailsDto publication);
         bool isPurchased(int publicationId);

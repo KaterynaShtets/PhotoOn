@@ -106,9 +106,9 @@ namespace PhotOn.Web.Controllers.Api
         }
 
         [HttpPost("save/{id:int}")]
-        public ActionResult SavePublication([FromQuery]int id)
+        public ActionResult SavePublication([FromQuery]string userId, int id)
         {
-            _publicationService.SavePublication(id);
+            _publicationService.SavePublication(userId, id);
             return NoContent();
         }
 

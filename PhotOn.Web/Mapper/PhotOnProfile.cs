@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using PhotOn.Application.Dtos;
 using PhotOn.Core.Entities;
 using PhotOn.Web.ViewModels;
+using PhotOn.Web.ViewModels.Account;
 using PhotOn.Web.ViewModels.Publications;
 using System;
 
@@ -27,6 +29,12 @@ namespace PhotOn.Web.Mapper
     {
         public PhotOnProfile()
         {
+            CreateMap<PublicationDetailsDto, PublicationViewModel>().ReverseMap();
+            CreateMap<PublicationCreationDto, PublicationViewModel>().ReverseMap();
+            CreateMap<ApplicationUser, UserViewModel>()
+                .ForMember(m => m.Password, opt => opt.MapFrom(src => src.PasswordHash))
+                .ReverseMap();
+            CreateMap<IdentityRole, RoleViewModel>().ReverseMap();
             CreateMap<UserDto, ApplicationUser>().ReverseMap();
             CreateMap<PublicationDetailsDto, PublicationViewModel>()
                 .ReverseMap();

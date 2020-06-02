@@ -1,4 +1,4 @@
-﻿@model PhotOn.Web.ViewModels.Publications.PublicationViewModel
+﻿@model PublicationViewModel
 
     <div class="col-sm-6" style="text-align: center;padding-bottom: 15px;">
         <!-- title -->
@@ -24,21 +24,24 @@
         <ul style="padding: 20px;list-style-type: none;padding-bottom: 0;margin: 0;">
             <li style="display: inline-block;font-size: 20px;padding-left: 20px;padding-right: 20px;">
                 @Model.LikeCount
-                <img src="icons/like.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
+                <a asp-controller="Publications" asp-action="SetLike" asp-route-publicationId="@Model.Id">
+                    <img src="icons/like.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
+                </a>
             </li>
 
             <li style="display: inline-block;font-size: 20px;padding-left: 20px;padding-right: 20px;">
-                <a asp-controller="Publications" asp-action="Details" asp-route-publicationId="@Model.Id" class="btn btn-primary" style="background-color: #f7a41d;border-radius: 10px;padding: 3px 50px;border: none;">
+                <a asp-controller="Publications" asp-action="ViewMore" asp-route-Id="@Model.Id" class="btn btn-primary" style="background-color: #f7a41d;border-radius: 10px;padding: 3px 50px;border: none;">
                     View more!
                 </a>
                 <form method="post" style="display: inline-block;">
-                    <input type="hidden" name="publicationId" value="@Model.Id">
-                    <input type="submit" value="Save" class="btn btn-success">
+                    <a asp-controller="Publications" asp-action="SetSave" asp-route-publicationId="@Model.Id" class="btn btn-warning small">Save</a>
                 </form>
             </li>
 
             <li style="display: inline-block;font-size: 20px;padding-left: 20px;padding-right: 20px;">
-                <img src="icons/add_to_cart.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
+                <a asp-controller="User" asp-action="ConfirmPayment" asp-route-publicationId="@Model.Id">
+                    <img src="icons/add_to_cart.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
+                </a>
                 @Model.Price
             </li>
         </ul>

@@ -67,7 +67,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" style="background-color: #f7a825; font-size:20px; border:none;">
+                <button asp-controller="User" asp-action="MakePurchase" asp-route-publicationId="@Model.PublicationId" type="button" class="btn btn-primary" style="background-color: #f7a825; font-size:20px; border:none;">
                     Confirm
                 </button>
             </div>

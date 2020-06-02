@@ -49,18 +49,20 @@ namespace PhotOn.Web.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult NewPublication()
         {
             var publicationViewModel = new PublicationViewModel();
 
-            // нужно сделать эквипмент сервис и репозиторий
-            //publicationDetailsModel.EquipmentModels = 
-            //                        equipmentService.GetAll();
+            return View("PublicationForm", publicationViewModel);
+        }
 
-            // нужно сделать эквипмент сервис и репозиторий
-            //publicationDetailsModel.TagModels =
-            //                        tagService.GetAll();
 
+        [HttpPost]
+        public ActionResult NewPublication(PublicationViewModel publicationViewModel)
+        {
+            var publicationDto = _mapper.Map<PublicationCreationDto>(publicationViewModel);
+            _publicationService.Add(publicationDto);
             return View("PublicationForm", publicationViewModel);
         }
 
@@ -120,24 +122,16 @@ namespace PhotOn.Web.Controllers
             return RedirectToAction("Index", "Publications");
         }
 
-        public async Task<ActionResult> BuyPublication(int id)
-        {
-            var publication = _publicationService.Get(id);
-            var user = await _userService.GetCurrentUser();
-            if (_userService.CheckUserBalance(user.Balance, publication.Price))
-            {
-                _publicationService.BuyPublication(user, publication);
-                return Ok();
-            }
-            else
-            {
-                return BadRequest("Not enough money on balance");
-            }
-        }
-
         public ActionResult SetLike(int publicationId )
         {
             _publicationService.LikePublication(publicationId);
+            return RedirectToAction("Index", "Publications");
+        }
+
+        public ActionResult SetSave(int publicationId)
+        {
+            var userId = _userService.GetCurrentUserId();
+            _publicationService.SavePublication(userId, publicationId);
             return RedirectToAction("Index", "Publications");
         }
     }

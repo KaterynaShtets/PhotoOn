@@ -1,0 +1,67 @@
+﻿@model UsersViewModel
+@using PhotOn.Web.Models
+@{
+    ViewData["Title"] = "GetUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Users</h2>
+@if (User.Identity.IsAuthenticated)
+{
+<p>Your account: @User.Identity.Name</p>
+}
+<table id="users" class="table table-hover">
+    <thead>
+        <tr scope="row">
+            <th>Email</th>
+            <th>Name</th>
+            <th>Balance</th>
+            <th>Role</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UserViewModels)
+        {
+        <tr>
+            <td>@user.Email</td>
+            <td>@user.UserName</td>
+            <td>@user.Balance points</td>
+            @if (user.RoleName == RoleName.Admin)
+                {
+            <td><span class="badge badge-success">@user.RoleName</span></td>
+                }
+                else if (user.RoleName == RoleName.Expert)
+                {
+            <td><span class="badge badge-info">@user.RoleName</span></td>
+                }
+                else if (user.RoleName == RoleName.User)
+                {
+            <td><span class="badge badge-primary">@user.RoleName</span></td>
+                }
+                else if (user.RoleName == RoleName.Banned)
+                {
+            <td><span class="badge badge-danger">@user.RoleName</span></td>
+                }
+            <td>@Html.ActionLink("Details", "GetUser", "Admin", routeValues: new { @userId = user.Id }, htmlAttributes: null)</td>
+        </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#users').DataTable({
+                columns: [
+                    {},
+                    {},
+                    {},
+                    {},
+                    {
+                        orderable: false
+                    }
+                ]
+            });
+        });
+    </script>
+}
