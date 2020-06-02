@@ -1,54 +1,63 @@
-﻿
+﻿@model SignInViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> signinManager
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Signin";
+    var providers = await signinManager.GetExternalAuthenticationSchemesAsync();
 }
 
-    <div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
 
-        <br>
-        <br>
-        <br>
-        <br>
+<div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
 
-        <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6" style="padding: 40px;background-color: #ffffffe3;border: solid 1px black;">
+    <br><br><br><br>
 
-                <h1>Log in</h1>
-                <hr>
-                <a href="#" class="btn btn-primary">Log in with Google</a>
-                or
-                <a href="#" class="btn btn-primary" style="background-color: #2f5277;border: none;">Log in with Facebook</a>
-                or :
-                <hr>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="padding: 40px;background-color: #ffffffe3;border: solid 1px black;">
 
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                        <div class="col" style="text-align: right;">
-                            Don't have an account?
-                            <a href="#" class="btn btn-success">Join PhotOn today!</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-sm-3"></div>
+            <h1>Log in</h1>
+
+            <hr>
+
+            <form asp-action="SignIn" method="post">
+
+                @Html.ValidationSummary()
+
+                <div class="form-group col-4">
+                    <label asp-for="Username"></label>
+                    <input type="text" asp-for="Username" />
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="Password"></label>
+                    <input type="password" asp-for="Password" />
+                </div>
+                <div class="form-group col-4">
+                    <input type="checkbox" asp-for="RememberMe" />Remember Me
+                </div>
+                <p>
+                    You can use your social media account to login as well.
+                </p>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+
+            <form asp-action="ExternalLogin" method="post">
+                <div class="form-group">
+                    @foreach (var provider in providers)
+                    {
+                        <button type="submit" name="provider" value="@provider.Name" class="btn btn-primary"> 
+                            Login with @provider.DisplayName
+                        </button>
+                    }
+                </div>
+            </form>
         </div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
+        <div class="col-sm-3"></div>
     </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+</div>
