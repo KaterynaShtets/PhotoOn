@@ -31,7 +31,15 @@ namespace PhotOn.Infrastructure.Repository
                 PublicationId = publicationId
             };
 
-            _dbContext.Likes.Add(like);
+            if (_dbContext.Likes
+                .Any(l => l.PublicationId == publicationId && l.UserId == userId))
+            {
+                _dbContext.Likes.Remove(like);
+            }
+            else 
+            {
+                _dbContext.Likes.Add(like);
+            }
         }
 
         public void SavePublication(string userId, int publicationId)
@@ -78,6 +86,24 @@ namespace PhotOn.Infrastructure.Repository
             _dbContext.PublicationPurchases.Add(purchase);
         }
 
+        public bool isPurchased(string userId, int publicationId) 
+        {
+            var purchase = new PublicationPurchase()
+            {
+                UserId = userId,
+                PublicationId = publicationId
+            };
+            if (_dbContext.PublicationPurchases
+                .Any(pp => pp.PublicationId == publicationId && pp.UserId == userId))
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+
         public void ApprovePublication(int publicationId) 
         {
             _dbSet.SingleOrDefault(p => p.Id == publicationId).IsApproved = true;
@@ -93,18 +119,18 @@ namespace PhotOn.Infrastructure.Repository
             return _dbSet
                         .Where(predicate)
                         .Include(p => p.User)
-                        .Include(p => p.PublicationEquipments)
+                        .Include(p => p.PublicationEquipments).ThenInclude(pt => pt.Equipment)
                         .Include(p => p.PublicationPurchases)
-                        .Include(p=>p.PublicationTags)
+                        .Include(p=>p.PublicationTags).ThenInclude(pt => pt.Tag)
                         .Include(p=>p.SavedPublications);
         }
 
         public Publication Get(int id)
         {
             return _dbSet.Include(p => p.User)
-                        .Include(p => p.PublicationEquipments)
+                        .Include(p => p.PublicationEquipments).ThenInclude(pt => pt.Equipment)
                         .Include(p => p.PublicationPurchases)
-                        .Include(p => p.PublicationTags)
+                        .Include(p => p.PublicationTags).ThenInclude(pt => pt.Tag)
                         .Include(p => p.SavedPublications)
                         .SingleOrDefault(p => p.Id == id);
         }
@@ -148,12 +174,16 @@ namespace PhotOn.Infrastructure.Repository
                         .Where(p => p.IsDeleted == false && p.IsApproved == false);
         }
 
+        public int GetPublicationLikes(int publicationId) 
+        {
+            return _dbContext.Likes.Where(l => l.PublicationId == publicationId).Count();
+        }
         public Publication SingleOrDefault(Expression<Func<Publication, bool>> predicate)
         {
             return _dbSet.Include(p => p.User)
-                        .Include(p => p.PublicationEquipments)
+                        .Include(p => p.PublicationEquipments).ThenInclude(pt => pt.Equipment)
                         .Include(p => p.PublicationPurchases)
-                        .Include(p => p.PublicationTags)
+                        .Include(p => p.PublicationTags).ThenInclude(pt => pt.Tag)
                         .Include(p => p.SavedPublications)
                         .SingleOrDefault(predicate);
         }

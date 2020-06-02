@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PhotOn.Web.Controllers
 {
-    [Route("publications")]
     public class AdminController : Controller
     {
         

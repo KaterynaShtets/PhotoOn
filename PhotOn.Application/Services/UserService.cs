@@ -62,9 +62,34 @@ namespace PhotOn.Application.Services
             };
         }
 
+        public bool CheckUserBalance(int balance, int sum)
+        {
+            if (balance < sum)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool CheckUserAge(DateTime dob)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - dob.Year;
+
+            if (age > 16)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         public string GetCurrentUserId()
         {
-            return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _httpContextAccessor.HttpContext.User
+                .FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
         public  async Task<ApplicationUser> GetCurrentUser() 

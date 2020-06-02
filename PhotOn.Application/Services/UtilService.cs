@@ -29,17 +29,6 @@ namespace PhotOn.Application.Services
             _userService = userService;
         }
 
-        public bool CheckBalance(int balance, int sum) 
-        {
-            if (balance < sum) 
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-       
         public async void DebitFromAccout(int sum)
         {
             var user = await _userService.GetCurrentUser();
@@ -55,5 +44,7 @@ namespace PhotOn.Application.Services
             await _userManager.UpdateAsync(user);
             _db.Save();
         }
+
+        
     }
 }

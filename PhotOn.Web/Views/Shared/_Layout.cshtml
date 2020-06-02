@@ -9,7 +9,7 @@
 <body>
     <!-- common header -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <img src="icons/logo.png" style="height: 80px;">
+        <img src="~/icons/logo.png" style="height: 80px;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,16 +35,16 @@
                         <a class="nav-link" asp-controller="User" asp-action="ReplenishBalance" style="font-size: 20px;">Balance</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link"asp-controller="User" asp-action="SetProfile" style="font-size: 20px;">
+                        <a class="nav-link" asp-controller="User" asp-action="SetProfile" style="font-size: 20px;">
                             Profile
                         </a>
                     </li>
-                    <img src="icons/profile.svg" class="icon d-none d-lg-block" style="width: 28px;height: 28px;margin: auto;">
+                    <img src="~/icons/profile.svg" class="icon d-none d-lg-block" style="width: 28px;height: 28px;margin: auto;">
                 }
                 else
                 {
                     <li class="nav-item active">
-                        <a class="nav-link"  asp-controller="Account" asp-action="SignIn" style="font-size: 20px;">
+                        <a class="nav-link" asp-controller="Account" asp-action="SignIn" style="font-size: 20px;">
                             Get started!
                         </a>
                     </li>
@@ -56,45 +56,44 @@
     @RenderBody()
 
     <!-- common footer -->
-    <div class="container" style="max-width: 100%;">
-        <div class="row" style="padding: 10px 80px;">
-            <div class="col-sm-1"></div>
+        <div class="container" style="position: absolute;  bottom: 0; max-width: 100%;">
+            <div class="row" style="padding: 10px 80px;">
+                <div class="col-sm-1"></div>
 
-            <!-- text -->
-            <div class="col-sm-3">
-                <img src="icons/logo.png" style="height: 110px;">
-            </div>
-            <!-- button -->
-            <div class="col-sm-7">
-                <ul style="list-style-type: none; margin: 0; padding: 10px 0 0 0;">
-                    <li style="display: inline-block;width: 30%;text-align: center;">
-                        <a asp-controller="Home" asp-action="Index" style="font-size: 20px;">Home</a>
-                    </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
+                <!-- text -->
+                <div class="col-sm-3">
+                    <img src="icons/logo.png" style="height: 110px;">
+                </div>
+                <!-- button -->
+                <div class="col-sm-7">
+                    <ul style="list-style-type: none; margin: 0; padding: 10px 0 0 0;">
                         <li style="display: inline-block;width: 30%;text-align: center;">
-                            <a href="#" style="font-size: 20px;">Post place </a>
+                            <a asp-controller="Home" asp-action="Index" style="font-size: 20px;">Home</a>
                         </li>
-                        <li style="display: inline-block;width: 30%;text-align: center;">
-                            <a asp-controller="Publications" asp-action="Index" style="font-size: 20px;">Find place </a>
-                        </li>
-                    }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li style="display: inline-block;width: 30%;text-align: center;">
+                                <a href="#" style="font-size: 20px;">Post place </a>
+                            </li>
+                            <li style="display: inline-block;width: 30%;text-align: center;">
+                                <a asp-controller="Publications" asp-action="Index" style="font-size: 20px;">Find place </a>
+                            </li>
+                        }
                     </ul>
-                <hr>
-                <ul style="list-style-type: none; margin: 0; padding: 5px 0 0 0;">
-                    <li style="display: inline-block;width: 100%;text-align: center;">
-                        <span style="font-size: 15px;">© 2020 Copyright</span>
-                    </li>
-                </ul>
+                    <hr>
+                    <ul style="list-style-type: none; margin: 0; padding: 5px 0 0 0;">
+                        <li style="display: inline-block;width: 100%;text-align: center;">
+                            <span style="font-size: 15px;">© 2020 Copyright</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-1"></div>
             </div>
-
-            <div class="col-sm-1"></div>
         </div>
-    </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

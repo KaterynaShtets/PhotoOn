@@ -8,7 +8,6 @@ namespace PhotOn.Application.Interfaces
 {
     public interface IUtilService
     {
-        bool CheckBalance(int balance, int sum);
         void DebitFromAccout(int sum);
         public void ReplenishBalance(int sum);
     }

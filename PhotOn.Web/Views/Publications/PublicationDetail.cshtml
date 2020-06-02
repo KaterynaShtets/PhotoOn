@@ -1,11 +1,11 @@
-﻿@model PhotOn.Web.ViewModels.PublicationViewModel
+﻿@model PublicationViewModel
 @{
     ViewData["Title"] = "PublicationDetail";
 }
 
 
 <!-- separator -->
-<img src="icons/separator.png" style="width: 100%;">
+<img src="~/icons/separator.png" style="width: 100%;">
 
 <div class="container">
     <div class="row" style="padding: 10px 0;">
@@ -27,9 +27,12 @@
                 <b>Tags:</b> 
             </p>
             <div style="display: inline-block;">
-                @foreach (var tag in Model.TagModels)
+                @if (Model.TagModels.Count() != 0)
                 {
-                    <a class="badge badge-success">@tag.Title</a>
+                    @foreach (var tag in Model.TagModels)
+                    {
+                        <a class="badge badge-success">@tag.Title</a>
+                    }
                 }
             </div>
 
@@ -102,4 +105,4 @@
 </div>
 
 <!-- separator -->
-<img src="icons/separator.png" style="width: 100%;">
+<img src="~/icons/separator.png" style="width: 100%;">

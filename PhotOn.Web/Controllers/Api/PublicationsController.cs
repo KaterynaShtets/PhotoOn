@@ -124,7 +124,7 @@ namespace PhotOn.Web.Controllers.Api
         {
             var publication = _publicationService.Get(id);
             var user = await _userService.GetCurrentUser();
-            if (_utilService.CheckBalance(user.Balance, publication.Price))
+            if (_userService.CheckUserBalance(user.Balance, publication.Price))
             {
                 _publicationService.BuyPublication(user, publication);
                 return Ok();

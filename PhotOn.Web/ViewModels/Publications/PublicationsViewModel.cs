@@ -1,7 +1,6 @@
-﻿using PhotOn.Application.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace PhotOn.Web.ViewModels
+namespace PhotOn.Web.ViewModels.Publications
 {
     public class PublicationsViewModel
     {

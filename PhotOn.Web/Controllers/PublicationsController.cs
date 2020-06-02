@@ -5,6 +5,7 @@ using PhotOn.Application.Dtos;
 using PhotOn.Application.Interfaces;
 using PhotOn.Web.Mapper;
 using PhotOn.Web.ViewModels;
+using PhotOn.Web.ViewModels.Publications;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,7 +34,19 @@ namespace PhotOn.Web.Controllers
                 _mapper.Map<IEnumerable<PublicationViewModel>>(publicationDetailsDtos);
             publicationsViewModel.Publications = publications;
 
-            return View("Search");
+            return View("Search", publications);
+        }
+
+        public ActionResult ViewMore(int Id) 
+        {
+            if (_publicationService.isPurchased(Id))
+            {
+                return RedirectToAction("Details", "Publications", new { publicationId = Id});
+            }
+            else 
+            {
+                return RedirectToAction("MakePurchase", "User");
+            }
         }
 
         public ActionResult NewPublication()
@@ -58,7 +71,7 @@ namespace PhotOn.Web.Controllers
             var publicationViewModel =
                 WebMapper.Mapper.Map<PublicationViewModel>(publicationDetailsModel);
 
-            return View("PublicationDetails", publicationViewModel);
+            return View("PublicationDetail", publicationViewModel);
         }
 
         public ActionResult Edit(int publicationId)
@@ -111,7 +124,7 @@ namespace PhotOn.Web.Controllers
         {
             var publication = _publicationService.Get(id);
             var user = await _userService.GetCurrentUser();
-            if (_utilService.CheckBalance(user.Balance, publication.Price))
+            if (_userService.CheckUserBalance(user.Balance, publication.Price))
             {
                 _publicationService.BuyPublication(user, publication);
                 return Ok();
@@ -120,6 +133,12 @@ namespace PhotOn.Web.Controllers
             {
                 return BadRequest("Not enough money on balance");
             }
+        }
+
+        public ActionResult SetLike(int publicationId )
+        {
+            _publicationService.LikePublication(publicationId);
+            return RedirectToAction("Index", "Publications");
         }
     }
 }

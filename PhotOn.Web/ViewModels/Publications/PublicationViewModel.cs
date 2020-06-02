@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PhotOn.Web.ViewModels
+namespace PhotOn.Web.ViewModels.Publications
 {
     public class PublicationViewModel
     {

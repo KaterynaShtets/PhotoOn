@@ -2,6 +2,7 @@
 using PhotOn.Application.Dtos;
 using PhotOn.Core.Entities;
 using PhotOn.Web.ViewModels;
+using PhotOn.Web.ViewModels.Publications;
 using System;
 
 namespace PhotOn.Web.Mapper
@@ -27,7 +28,8 @@ namespace PhotOn.Web.Mapper
         public PhotOnProfile()
         {
             CreateMap<UserDto, ApplicationUser>().ReverseMap();
-            CreateMap<PublicationDetailsDto, PublicationViewModel>().ReverseMap();
+            CreateMap<PublicationDetailsDto, PublicationViewModel>()
+                .ReverseMap();
             CreateMap<PublicationCreationDto, PublicationViewModel>().ReverseMap();
         }
     }

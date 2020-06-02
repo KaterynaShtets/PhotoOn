@@ -115,6 +115,10 @@ namespace PhotOn.Application.Services
         public IEnumerable<PublicationDetailsDto> GetAllPublications()
         {
             var publicationList = _db.Publications.GetAllPresent().ToList();
+            foreach (var publicat in publicationList) 
+            {
+                publicat.LikeCount = _db.Publications.GetPublicationLikes(publicat.Id);
+            }
             var mapped = ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(publicationList);
             return mapped;
         }
@@ -237,5 +241,20 @@ namespace PhotOn.Application.Services
                 _logger.LogWarning("Error in buyPublication");
             }
         }
+
+        public  bool isPurchased(int publicationId)
+        {
+            var userId =  _userService.GetCurrentUserId();
+            if (_db.Publications.isPurchased(userId, publicationId))
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+          
+        }
+
     }
 }
