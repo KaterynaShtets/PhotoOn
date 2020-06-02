@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PhotOn.Web.Models;
+using System.Collections.Generic;
 
 namespace PhotOn.Web.ViewModels.Publications
 {
@@ -6,6 +7,6 @@ namespace PhotOn.Web.ViewModels.Publications
     {
         public IEnumerable<PublicationViewModel> Publications { get; set; }
 
-        //public PublicationFilterModel FilterModel { get; set; }
+        public PublicationsFilterModel FilterModel { get; set; }
     }
 }

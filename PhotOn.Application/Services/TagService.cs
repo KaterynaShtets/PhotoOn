@@ -6,6 +6,7 @@ using PhotOn.Core.Entities;
 using PhotOn.Core.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PhotOn.Application.Services
@@ -26,7 +27,11 @@ namespace PhotOn.Application.Services
             try
             {
                 var tag = ObjectMapper.Mapper.Map<Tag>(tagDto);
-                _db.Tags.Add(tag);
+                var tags = _db.Tags.GetAll();
+                if (!tags.Any(t=>t.Title == tag.Title))
+                {
+                    _db.Tags.Add(tag);
+                }
                 _db.Save();
             }
             catch

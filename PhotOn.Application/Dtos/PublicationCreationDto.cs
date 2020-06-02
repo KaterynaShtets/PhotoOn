@@ -21,5 +21,8 @@ namespace PhotOn.Application.Dtos
         //[FileSIzeValidation(4)]
         [ContentTypeValidator(ContentTypeGroup.Image)]
         public IFormFile ImageFile { get; set; }
+
+        public List<TagDto> TagsDtos { get; set; }
+        public List<EquipmentDto> EquipmentDtos { get; set; }
     }
 }

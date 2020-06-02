@@ -6,7 +6,7 @@
 
 <h1>@Model.PageTitle</h1>
 
-@using (Html.BeginForm("NewPublication", "Publications", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Save", "Publications", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-row">
         <span id="output">

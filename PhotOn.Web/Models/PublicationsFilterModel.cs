@@ -7,13 +7,8 @@ namespace PhotOn.Web.Models
 {
     public class PublicationsFilterModel
     {
-        public string OrderingField { get; set; }
-        public bool AscendingOrder { get; set; }
-        public bool DescendingOrder { get; set; }
-
-        public string Title { get; set; }
-        public int? TagId { get; set; }
-        public int? EquipmentId { get; set; }
-        public bool isToday { get; set; }
+        public string searchString { get; set; }
+        public string sortOrder { get; set; }
+        public int fiterOption { get; set; }
     }
 }

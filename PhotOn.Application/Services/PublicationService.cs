@@ -57,6 +57,11 @@ namespace PhotOn.Application.Services
                 }
                 _db.Publications.Add(publication);
                 _db.Save();
+                var Id = _db.Publications.Find(p => p.Title == publication.Title && p.Price == publication.Price)
+                    .First().Id;
+                AddTagToPublication(publicationCreationModel.TagsDtos, Id);
+                AddEquipmentToPublication(publicationCreationModel.EquipmentDtos, Id);
+                _db.Save();
             }
             catch (Exception ex)
             {
@@ -114,11 +119,7 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<PublicationDetailsDto> GetAllPublications()
         {
-            var publicationList = _db.Publications.GetAllPresent().ToList();
-            foreach (var publicat in publicationList) 
-            {
-                publicat.LikeCount = _db.Publications.GetPublicationLikes(publicat.Id);
-            }
+            var publicationList = _db.Publications.GetAllPresent();
             var mapped = ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(publicationList);
             return mapped;
         }
@@ -191,6 +192,28 @@ namespace PhotOn.Application.Services
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
         }
 
+        public IEnumerable<PublicationDetailsDto> GetAllPresentApprovedPublications()
+        {
+            var publicationList = _db.Publications.GetAllPresentApproved().ToList();
+            foreach (var publicat in publicationList)
+            {
+                publicat.LikeCount = _db.Publications.GetPublicationLikes(publicat.Id);
+            }
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(publicationList);
+            return mapped;
+        }
+
+        public IEnumerable<PublicationDetailsDto> GetAllPresentDisApprovedPublications()
+        {
+            var publicationList = _db.Publications.GetAllPresentDisApproved().ToList();
+            foreach (var publicat in publicationList)
+            {
+                publicat.LikeCount = _db.Publications.GetPublicationLikes(publicat.Id);
+            }
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(publicationList);
+            return mapped;
+        }
+
         public IEnumerable<PublicationDetailsDto> GetUserPublications(string userId)
         {
             var userPublications = _db.Publications
@@ -247,5 +270,30 @@ namespace PhotOn.Application.Services
           
         }
 
+        public void AddTagToPublication(IEnumerable<TagDto> tags, int publicationId)
+        {
+            foreach (var tag in tags) 
+            {
+                var tagEntity = ObjectMapper.Mapper.Map<Tag>(tag);
+                _db.Tags.Add(tagEntity);
+                _db.Save();
+                var id = _db.Tags.Find(tg => tg.Title == tag.Title).First().Id;
+                _db.Publications.AddTagToPublication(id, publicationId);
+                _db.Save();
+            }
+        }
+
+        public void AddEquipmentToPublication(IEnumerable<EquipmentDto> equipments, int publicationId)
+        {
+            foreach (var equipment in equipments)
+            {
+                var equipmentEntity = ObjectMapper.Mapper.Map<Equipment>(equipment);
+                _db.Equipments.Add(equipmentEntity);
+                _db.Save();
+                var id = _db.Equipments.Find(eq => eq.Title == equipment.Title).First().Id;
+                _db.Publications.AddEquipmentToPublication(id, publicationId);
+                _db.Save();
+            }
+        }
     }
 }

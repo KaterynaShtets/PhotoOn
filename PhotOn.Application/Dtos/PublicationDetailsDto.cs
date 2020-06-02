@@ -26,6 +26,7 @@ namespace PhotOn.Application.Dtos
         public string TextDescription { get; set; }
         public int LikeCount { get; set; }
 
+        public bool isApproved { get; set; }
         public IEnumerable<EquipmentDto> EquipmentModels { get; private set; }
         public IEnumerable<TagDto> TagModels { get; private set; }
     }

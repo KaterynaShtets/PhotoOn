@@ -1,0 +1,72 @@
+﻿@model PublicationsViewModel
+@{
+    ViewData["Title"] = "ExpertView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Publications for approving</h1>
+@if (Model.Publications.Count() == 0)
+{
+    <h3>No new publications</h3>
+}
+else
+{
+    <table id="publications" class="table table-hover">
+        <thead>
+            <tr scope="row">
+                <th>Picture</th>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Approved</th>
+                <th>Accept</th>
+                <th>Reject</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var publication in Model.Publications)
+            {
+                <tr scope="row">
+                    <td><img src='@publication.ImageLink' alt='No image.' class='img-thumbnail-publication' /></td>
+                    <td>@publication.Id</td>
+                    <td>@Html.ActionLink(publication.Title, "Details", "Publications", null, null, null, htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
+                    @if (publication.IsApproved)
+                    {
+                        <td><span class="badge badge-success">Yes</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="badge badge-warning">No</span></td>
+                    }
+                    <td>@Html.ActionLink("Accept", "Accept", "Expert", htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
+                    <td>@Html.ActionLink("Reject", "Reject", "Expert", htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @section scripts{
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#publications').DataTable({
+                    columns: [
+                        {
+                            orderable: false
+                        },
+                        {},
+                        {
+                            orderable: false
+                        },
+                        {
+                            orderable: false
+                        },
+                        {
+                            orderable: false
+                        },
+                        {
+                            orderable: false
+                        },
+                    ]
+                });
+            });</script>
+    }
+}

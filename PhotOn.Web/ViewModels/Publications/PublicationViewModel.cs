@@ -23,20 +23,15 @@ namespace PhotOn.Web.ViewModels.Publications
         public string Title { get; set; }
 
         [Display(Name = "Price")]
-        //[Required(ErrorMessage = "Please, enter the price")]
+        [Required(ErrorMessage = "Please, enter the price, if your publication is free, put 0")]
         [Range(0, 999999999)]
-        public decimal? Price { get; set; }
+        public int Price { get; set; }
 
-        [Display(Name = "Coordinate X")]
-        //[Required(ErrorMessage = "Please, enter the X")]
         public decimal coordX { get; set; }
-
-        [Display(Name = "Coordinate Y")]
-        //[Required(ErrorMessage = "Please, enter the Y")]
         public decimal coordY { get; set; }
 
         [Display(Name = "Season")]
-        //[Required(ErrorMessage = "Please, select the season")]
+        [Required(ErrorMessage = "Please, select the season")]
         public TimeOfTheYearDto Season { get; set; }
 
         [Display(Name = "Description")]
@@ -51,9 +46,9 @@ namespace PhotOn.Web.ViewModels.Publications
         public IFormFile Picture { get; set; }
 
         public string ImageLink;
-
-        public IEnumerable<EquipmentDto> EquipmentModels { get; private set; }
-        public IEnumerable<TagDto> TagModels { get; private set; }
+        public bool IsApproved { get; set; }
+        public List<EquipmentDto> EquipmentModels { get;  set; }
+        public List<TagDto> TagModels { get; set; }
 
         public string PageTitle
         {
