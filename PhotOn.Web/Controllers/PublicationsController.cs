@@ -33,10 +33,10 @@ namespace PhotOn.Web.Controllers
                 _mapper.Map<IEnumerable<PublicationViewModel>>(publicationDetailsDtos);
             publicationsViewModel.Publications = publications;
 
-            return View("UNSORTED/Main");
+            return View("Search");
         }
 
-        public ActionResult New()
+        public ActionResult NewPublication()
         {
             var publicationViewModel = new PublicationViewModel();
 

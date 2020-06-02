@@ -21,7 +21,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="font-size: 20px;">Post place</a>
+                        <a class="nav-link" asp-controller="Publications" asp-action="NewPublication" style="font-size: 20px;">Post place</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Publications" asp-action="Index" style="font-size: 20px;">Find place</a>
@@ -32,10 +32,10 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item active">
-                        <a class="nav-link" href="#" style="font-size: 20px;">Balance</a>
+                        <a class="nav-link" asp-controller="User" asp-action="ReplenishBalance" style="font-size: 20px;">Balance</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#" style="font-size: 20px;">
+                        <a class="nav-link"asp-controller="User" asp-action="SetProfile" style="font-size: 20px;">
                             Profile
                         </a>
                     </li>
@@ -44,7 +44,7 @@
                 else
                 {
                     <li class="nav-item active">
-                        <a class="nav-link" href="#" style="font-size: 20px;">
+                        <a class="nav-link"  asp-controller="Account" asp-action="SignIn" style="font-size: 20px;">
                             Get started!
                         </a>
                     </li>

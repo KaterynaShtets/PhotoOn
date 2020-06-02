@@ -1,39 +1,69 @@
-﻿@model SignUpViewModel
+﻿@model PhotOn.Web.ViewModels.Account.SignUpViewModel
 @{
-    ViewData["Title"] = "Signup";
+    ViewData["Title"] = "SignUp";
 }
 
-<h1>Signup</h1>
+<div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
 
+    <br><br><br><br>
 
-<form asp-controller="Account" asp-action="Signup" method="post">
-    @Html.ValidationSummary()
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="padding: 40px;background-color: #ffffffe3;border: solid 1px black;">
 
-    <div class="form-group col-4">
-        <label asp-for="Email">Email:</label>
-        <input type-="text" asp-for="Email" class="form-control" />
+            <h1>Join PhotOn today!</h1>
+
+            <hr>
+
+            <form asp-controller="Account" asp-action="ExternalLogin" method="post">
+                <div class="form-group">
+                    <button type="submit" name="provider" value="Google" class="btn btn-primary"> Login with Google</button>
+                    or
+                    <button type="submit" name="provider" value="Facebook" class="btn btn-primary"> Login with Facebook</button>
+                    or create a PhotOn account:
+                </div>
+            </form>
+
+            <hr>
+
+            <form asp-controller="Account" asp-action="Signup" method="post">
+                @Html.ValidationSummary()
+
+                <div class="form-group col-4">
+                    <label asp-for="Email">Email:</label>
+                    <input type="text" asp-for="Email" class="form-control" />
+
+                    <small class="form-text text-muted">
+                        We'll never share your email with anyone else.
+                    </small>
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="Password">Password:</label>
+                    <input type="text" asp-for="Password" class="form-control" />
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="ConfirmPassword">Password:</label>
+                    <input type="text" asp-for="ConfirmPassword" class="form-control" />
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="DOB">DOB:</label>
+                    <input type="date" asp-for="DOB" class="form-control" asp-format="{0:yyyy-MM-dd}" />
+                    @Html.ValidationMessageFor(m => m.DOB)
+                </div>
+                <button type="submit" asp-action="Signup" class="btn btn-primary">Signup!</button>
+            </form>
+
+            <div class="alert alert-info">
+                If you already have an account, pelase <a asp-action="Signin">sign in</a>
+            </div>
+
+        </div>
+        <div class="col-sm-3"></div>
     </div>
 
-    <div class="form-group col-4">
-        <label asp-for="Password">Password:</label>
-        <input type-="text" asp-for="Password" class="form-control" />
-    </div>
+    <br><br><br><br>
 
-    <div class="form-group col-4">
-        <label asp-for="ConfirmPassword">Password:</label>
-        <input type-="text" asp-for="ConfirmPassword" class="form-control" />
-    </div>
-
-    <div class="form-group col-4">
-        <label asp-for="DOB">DOB:</label>
-        <input type-="date" asp-for="DOB" class="form-control" asp-format="{0:yyyy-MM-dd}" />
-        @Html.ValidationMessageFor(m => m.DOB)
-    </div>
-    <button type="submit" asp-action="Signup" class="btn btn-primary">Signup!</button>
-</form>
-
-<div class="alert alert-info">
-    If you already have an account, pelase <a asp-action="Signin">sign in</a>
 </div>
-
-
