@@ -169,30 +169,24 @@ namespace PhotOn.Application.Services
 
         public IEnumerable<PublicationDetailsDto> GetUserLikedPublications(string userId) 
         {
-            var likedPublications =  _db.Publications
-                .GetAllPresentApproved()
-                .Where(p => p.Likes.Select(l => l.UserId)
-                .Contains(userId));
+            var likedPublications = _db.Publications.GetUserLikedPublications(userId);
 
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
         }
 
         public IEnumerable<PublicationDetailsDto> GetUserSavedPublications(string userId)
         {
-            var likedPublications = _db.Publications
-                .GetAllPresentApproved()
-                .Where(p => p.SavedPublications.Select(l => l.UserId)
-                .Contains(userId));
+            var savedPublications = _db.Publications.GetUserSavedPublications(userId);
 
-            return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
+            return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(savedPublications);
         }
 
         public IEnumerable<PublicationDetailsDto> GetUserPurchasedPublications(string userId)
         {
             var likedPublications = _db.Publications
-                .GetAllPresentApproved()
-                .Where(p => p.PublicationPurchases.Select(l => l.UserId)
-                .Contains(userId));
+                   .GetAllPresentApproved()
+                  .Where(p => p.SavedPublications
+                  .Any(p => p.UserId == userId));
 
             return ObjectMapper.Mapper.Map<IEnumerable<PublicationDetailsDto>>(likedPublications);
         }
@@ -216,11 +210,8 @@ namespace PhotOn.Application.Services
             _db.Save();
         }
 
-        public void SavePublication(int id)
+        public void SavePublication(string userId, int id)
         {
-            var userId = _httpContextAccessor.HttpContext.User
-                .FindFirst(ClaimTypes.NameIdentifier).Value;
-
             _db.Publications.SavePublication(userId, id);
 
             _db.Save();

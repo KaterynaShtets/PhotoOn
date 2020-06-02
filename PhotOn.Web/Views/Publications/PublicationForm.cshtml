@@ -6,7 +6,7 @@
 
 <h1>@Model.PageTitle</h1>
 
-@using (Html.BeginForm("Save", "Publications", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewPublication", "Publications", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-row">
         <span id="output">
@@ -77,7 +77,7 @@
     <input type="hidden" name="coordX">
     <input type="hidden" name="coordY">
     <input type="submit" id="real_submit" style="display: none;">
-    <input type="button" id="fake_submit" value="Save">
+    <button id="fake_submit" value="Save">Save</button>
 
     @Html.HiddenFor(c => c.Id)
     // здесь дописать скрытые поля для всех данных, что не изменяются
@@ -117,14 +117,16 @@
     </script>
 
     <script>
-        const real_submit = document.getElementById('real_submit');
+         const real_submit = document.getElementById('real_submit');
         const form = document.getElementsByTagName('form')[0];
         document.getElementById('fake_submit').addEventListener('click', () => {
+                    console.log("we are here 1");
             const coords = map_input.getCoords();
             form.coordX.value = coords.lat;
             form.coordY.value = coords.lng;
             real_submit.click();
-        });
+        }, false);
+        console.log("we are here 2");
     </script>
 
     <script>

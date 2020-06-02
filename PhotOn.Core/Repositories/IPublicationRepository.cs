@@ -23,11 +23,13 @@ namespace PhotOn.Core.Repositories
         void BuyPublication(string userId, int publicationId);
         bool isPurchased(string userId, int publicationId);
 
+
         IEnumerable<Publication> GetAllPresent();
         IEnumerable<Publication> GetAllPresentApproved();
         IEnumerable<Publication> GetAllPresentDisApproved();
+        IEnumerable<Publication> GetUserLikedPublications(string userId);
+        IEnumerable<Publication> GetUserSavedPublications(string userId);
         int GetPublicationLikes(int publicationId);
-       
 
         IEnumerable<Publication> Find(Expression<Func<Publication, bool>> predicate);
         Publication SingleOrDefault(Expression<Func<Publication, bool>> predicate);
