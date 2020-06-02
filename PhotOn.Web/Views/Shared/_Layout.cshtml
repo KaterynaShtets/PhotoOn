@@ -14,6 +14,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
+            @*left*@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" asp-controller="Home" asp-action="Index" style="font-size: 20px;">Home</a>
@@ -28,28 +29,36 @@
                     </li>
                 }
             </ul>
-            <ul class="navbar-nav">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item active">
-                        <a class="nav-link" asp-controller="User" asp-action="ReplenishBalance" style="font-size: 20px;">Balance</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" asp-controller="User" asp-action="SetProfile" style="font-size: 20px;">
-                            Profile
-                        </a>
-                    </li>
-                    <img src="~/icons/profile.svg" class="icon d-none d-lg-block" style="width: 28px;height: 28px;margin: auto;">
-                }
-                else
-                {
-                    <li class="nav-item active">
-                        <a class="nav-link" asp-controller="Account" asp-action="SignIn" style="font-size: 20px;">
-                            Get started!
-                        </a>
-                    </li>
-                }
-            </ul>
+            @*right*@
+        <ul class="navbar-nav">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="User" asp-action="ReplenishBalance" style="font-size: 20px;">Balance</a>
+                </li>
+                <li class="nav-item">
+                    @*dropdown*@
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style=" margin-top: 7px;">
+                            My profile
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <button class="dropdown-item" type="button">@User.Identity.Name</button>
+                            <a class="dropdown-item" href="#">Go to my page</a>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Account" asp-action="SignIn" style="font-size: 20px;">
+                        Get started!
+                    </a>
+                </li>
+            }
+        </ul>
         </div>
     </nav>
 
