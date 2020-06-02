@@ -3,7 +3,9 @@
     ViewData["Title"] = "PublicationForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <h1>@Model.PageTitle</h1>
+
 @using (Html.BeginForm("Save", "Publications", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-row">
@@ -32,20 +34,54 @@
         @Html.ValidationMessageFor(c => c.TextDescription)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.coordX, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        @Html.TextBoxFor(c => c.coordX, htmlAttributes: new { @class = "form-control form-control-sm" })
-        @Html.ValidationMessageFor(c => c.coordX)
+        @Html.LabelFor(c => c.Season, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+        <select asp-for="Season" asp-items="Html.GetEnumSelectList<PhotOn.Core.Entities.TimeOfTheYear>()">
+            <option selected="selected" value="">Please select</option>
+        </select>
+        @Html.ValidationMessageFor(c => c.Season)
     </div>
     <div class="form-group">
-        @Html.LabelFor(c => c.coordY, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        @Html.TextBoxFor(c => c.coordY, htmlAttributes: new { @class = "form-control form-control-sm" })
-        @Html.ValidationMessageFor(c => c.coordY)
+        @Html.LabelFor(c => c.Price, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+        @Html.TextBoxFor(c => c.Price, htmlAttributes: new { @class = "form-control form-control-sm" })
+        @Html.ValidationMessageFor(c => c.Price)
     </div>
+
+    @*equipment*@
+    <div class="form-group">
+        @Html.LabelFor(c => c.EquipmentModels, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+        <div class="row">
+            <div class="col-sm-8" id="inputs_eq">
+                <input type="text" name="EquipmentModels[0].Title" value="" class="input-group-text" />
+            </div>
+            <div class="col-sm-4">
+                <input type="button" id="add_eq" value="add" class="btn btn-success">
+            </div>
+        </div>
+    </div>
+
+    @*tags*@
+    <div class="form-group">
+        @Html.LabelFor(c => c.TagModels, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+        <div class="row">
+            <div class="col-sm-8" id="inputs_tag">
+                <input type="text" name="TagModels[0].Title" value="" class="input-group-text" />
+            </div>
+            <div class="col-sm-4">
+                <input type="button" id="add_tag" value="add" class="btn btn-success">
+            </div>
+        </div>
+    </div>
+
+
+    <input type="hidden" name="coordX">
+    <input type="hidden" name="coordY">
+    <input type="submit" id="real_submit" style="display: none;">
+    <input type="button" id="fake_submit" value="Save">
+
     @Html.HiddenFor(c => c.Id)
     // здесь дописать скрытые поля для всех данных, что не изменяются
     @*@Html.HiddenFor(c => c.DateOfAdding)*@
     @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Save</button>
 }
 @section scripts
 {
@@ -77,5 +113,50 @@
             reader.readAsDataURL(f);
         }
         document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    </script>
+
+    <script>
+        const real_submit = document.getElementById('real_submit');
+        const form = document.getElementsByTagName('form')[0];
+        document.getElementById('fake_submit').addEventListener('click', () => {
+            const coords = map_input.getCoords();
+            form.coordX.value = coords.lat;
+            form.coordY.value = coords.lng;
+            real_submit.click();
+        });
+    </script>
+
+    <script>
+        const root_eq = document.getElementById('inputs_eq');
+        let count_value_eq = 1;
+
+        document.getElementById('add_eq').addEventListener('click', () => {
+            addInputField_eq(root_eq, count_value_eq++);
+        })
+
+        function addInputField_eq(root, id) {
+            let inp = document.createElement('input');
+            inp.type = 'text';
+            inp.name = 'EquipmentModels[' + id + '].Title';
+            inp.className = 'input-group-text';
+            root.appendChild(inp);
+        }
+    </script>
+
+    <script>
+        const root_tag = document.getElementById('inputs_tag');
+        let count_value_tag = 1;
+
+        document.getElementById('add_tag').addEventListener('click', () => {
+            addInputField_tag(root_tag, count_value_tag++);
+        })
+
+        function addInputField_tag(root, id) {
+            let inp = document.createElement('input');
+            inp.type = 'text';
+            inp.name = 'TagModels[' + id + '].Title';
+            inp.className = 'input-group-text';
+            root.appendChild(inp);
+        }
     </script>
 }
