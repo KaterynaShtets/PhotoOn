@@ -39,10 +39,10 @@
                 <li class="nav-item">
                     @*dropdown*@
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style=" margin-top: 7px;">
-                            My profile
+                        <button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="        margin-top: 7px;border: none;background-color: #9acd3200;">
+                            <img src="~/icons/profile.svg" style=" height: 30px;" />
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="right:0;left:unset;">
                             <button class="dropdown-item" type="button">@User.Identity.Name</button>
                             <a class="dropdown-item" href="#">Go to my page</a>
                             <a class="dropdown-item" href="#">Logout</a>
@@ -65,7 +65,7 @@
     @RenderBody()
 
     <!-- common footer -->
-        <div class="container" style="bottom: 0; max-width: 100%;">
+        <div class="container" style="max-width: 100%;">
             <div class="row" style="padding: 10px 80px;">
                 <div class="col-sm-1"></div>
 
