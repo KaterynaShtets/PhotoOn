@@ -1,9 +1,12 @@
 ﻿@model PhotOn.Web.ViewModels.Account.SignUpViewModel
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
 @{
     ViewData["Title"] = "SignUp";
+    string path = $"{env.WebRootPath}\\icons\\balance_page_bg.png"
+        .Replace(env.WebRootPath, "").Replace(@"\", "/");
 }
 
-<div style="background-image: url(icons/balance_page_bg.png);padding:30px;">
+<div style="background-image: url(@path);padding:30px;">
 
     <br><br><br><br>
 
