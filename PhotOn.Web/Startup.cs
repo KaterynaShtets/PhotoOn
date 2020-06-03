@@ -134,17 +134,17 @@ namespace PhotOn.Web
                 });
 
 
-            services.AddAuthentication()
-                .AddFacebook(options =>
-            {
-                options.AppId = Configuration["FacebookAppId"];
-                options.AppSecret = Configuration["FacebookAppSecret"];
-            })
-                .AddGoogle(options =>
-                { 
-                    options.ClientId = Configuration["GoogleClientId"];
-                    options.ClientSecret = Configuration["GoogleClientSecret"];
-                }); 
+            //services.AddAuthentication()
+            //    .AddFacebook(options =>
+            //{
+            //    options.AppId = Configuration["FacebookAppId"];
+            //    options.AppSecret = Configuration["FacebookAppSecret"];
+            //})
+            //    .AddGoogle(options =>
+            //    { 
+            //        options.ClientId = Configuration["GoogleClientId"];
+            //        options.ClientSecret = Configuration["GoogleClientSecret"];
+            //    }); 
 
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
 

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>a2d105db-41a9-4b36-a368-8352ac735df5</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/9ce9b98f-b50f-4803-a9a0-f88e8a99ed1e/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/PhotOn.Web</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/9ce9b98f-b50f-4803-a9a0-f88e8a99ed1e/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/PhotOnWebLastVersion</ApplicationInsightsResourceId>
   </PropertyGroup>
 
 
