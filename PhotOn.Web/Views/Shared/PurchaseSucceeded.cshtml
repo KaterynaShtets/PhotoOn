@@ -1,0 +1,25 @@
+﻿@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
+@{
+    ViewData["Title"] = "PurchaseSucceeded";
+    string path = $"{env.WebRootPath}\\icons\\balance_page_bg.png"
+        .Replace(env.WebRootPath, "").Replace(@"\", "/");
+}
+
+<!-- separator -->
+<img src="~/icons/separator.png" style="width: 100%; height: 20px; object-fit: cover; display: block;">
+
+<div style="background-image:url(@path);padding:30px;text-align:center;">
+    <hr />
+    <h1>
+        The purchase was successful 😄
+        <br />
+        Check your bought publications!
+    </h1>
+    <hr />
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">
+        Go home
+    </a>
+</div>
+
+<!-- separator -->
+<img src="~/icons/separator.png" style="width: 100%; height: 20px; object-fit: cover; display: block;">

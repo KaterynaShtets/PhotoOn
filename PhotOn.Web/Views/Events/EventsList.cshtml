@@ -4,16 +4,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Events</h1>
+<!-- separator -->
+<img src="~/icons/separator.png" style="width: 100%; height: 20px; object-fit: cover; display: block;">
 
-@foreach(var ev in Model) 
-{ 
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a asp-controller="Publicaitons" asp-action="Add" class="btn btn-primary">Add publication</a>
+<div class="container">
+    <h1 style="margin-top: 5px;">
+        Events
+    </h1>
+
+    <hr style="margin:0;" />
+
+    <div class="row">
+        @foreach (var ev in Model)
+        {
+            <div class="col-sm-4" style="margin:10px 0;">
+                <div class="card" style="width: 18rem;">
+                    @* Title and tag *@
+                    <div class="card-img-top" style="text-align:center;">
+                        <h4 style="margin-top: 4px; margin-bottom: 4px;">@ev.AwardTitle</h4>
+                        <p style="display: inline-block;margin: 0;margin-bottom: 4px;">
+                            <i>Tag:</i>
+                        </p>
+                        <div style="display: inline-block;">
+                            <a class="badge badge-success">@ev.Tag.Title</a>
+                        </div>
+                        <hr style="margin: 0;" />
+                    </div>
+
+                    @* Description and datetime *@
+                    <div class="card-body">
+                        <p class="card-text" style="background-color: #d9e2e2; border-radius: 5px; padding: 4px;">
+                            @ev.TextDescription
+                        </p>
+                        <p>
+                            <small>
+                                Date:
+                                @ev.DateTime.ToShortDateString()
+                                <br />
+                                Time:
+                                @ev.DateTime.ToShortTimeString()
+                            </small>
+                        </p>
+
+                        <a asp-controller="Publicaitons" asp-action="Add" asp-route-eventId="@ev.Id" class="btn btn-primary btn-block">
+                            Add publication
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
-}
+
+<br />
+<!-- separator -->
+<img src="~/icons/separator.png" style="width: 100%; height: 20px; object-fit: cover; display: block;">
