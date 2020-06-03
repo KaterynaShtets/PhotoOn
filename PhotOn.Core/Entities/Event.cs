@@ -15,6 +15,7 @@ namespace PhotOn.Core.Entities
         public string TextDescription { get; set; }
         public string AwardTitle { get; set; }
         public Tag Tag { get; set; }
+        public string ImageLink { get; set; }
         public int TagId { get; set; }
         public ICollection<UserEvent> UserEvents { get; set; }
 

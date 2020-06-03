@@ -18,7 +18,7 @@ namespace PhotOn.Web
         {
             var host = CreateWebHostBuilder(args).Build();
 
-            SeedDatabase(host);
+            //SeedDatabase(host);
 
             host.Run();
         }

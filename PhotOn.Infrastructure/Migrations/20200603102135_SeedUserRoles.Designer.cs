@@ -10,8 +10,8 @@ using PhotOn.Infrastructure.Data;
 namespace PhotOn.Infrastructure.Migrations
 {
     [DbContext(typeof(PhotOnContext))]
-    [Migration("20200528184201_AddUserPropertiesToDb")]
-    partial class AddUserPropertiesToDb
+    [Migration("20200603102135_SeedUserRoles")]
+    partial class SeedUserRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -160,8 +160,8 @@ namespace PhotOn.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Balance")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -254,13 +254,21 @@ namespace PhotOn.Infrastructure.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImageLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TextDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TagId");
 
                     b.ToTable("Events");
                 });
@@ -287,6 +295,9 @@ namespace PhotOn.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ImageLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
@@ -296,8 +307,8 @@ namespace PhotOn.Infrastructure.Migrations
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PublicationDate")
                         .HasColumnType("datetime2");
@@ -340,28 +351,6 @@ namespace PhotOn.Infrastructure.Migrations
                     b.HasIndex("EquipmentId");
 
                     b.ToTable("PublicationEquipments");
-                });
-
-            modelBuilder.Entity("PhotOn.Core.Entities.PublicationImage", b =>
-                {
-                    b.Property<int>("PublicationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
-
-                    b.HasKey("PublicationId", "ImageLink");
-
-                    b.ToTable("PublicationImages");
                 });
 
             modelBuilder.Entity("PhotOn.Core.Entities.PublicationPurchase", b =>
@@ -505,6 +494,15 @@ namespace PhotOn.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PhotOn.Core.Entities.Event", b =>
+                {
+                    b.HasOne("PhotOn.Core.Entities.Tag", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PhotOn.Core.Entities.Like", b =>
                 {
                     b.HasOne("PhotOn.Core.Entities.Publication", "Publication")
@@ -539,15 +537,6 @@ namespace PhotOn.Infrastructure.Migrations
                         .WithMany("PublicationEquipments")
                         .HasForeignKey("PublicationId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PhotOn.Core.Entities.PublicationImage", b =>
-                {
-                    b.HasOne("PhotOn.Core.Entities.Publication", "Publication")
-                        .WithMany("PublicationImagies")
-                        .HasForeignKey("PublicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

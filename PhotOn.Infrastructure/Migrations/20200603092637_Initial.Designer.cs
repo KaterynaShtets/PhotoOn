@@ -10,8 +10,8 @@ using PhotOn.Infrastructure.Data;
 namespace PhotOn.Infrastructure.Migrations
 {
     [DbContext(typeof(PhotOnContext))]
-    [Migration("20200601093131_addtagtoaward")]
-    partial class addtagtoaward
+    [Migration("20200603092637_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,6 +254,9 @@ namespace PhotOn.Infrastructure.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImageLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -304,7 +307,7 @@ namespace PhotOn.Infrastructure.Migrations
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublicationDate")

@@ -40,26 +40,12 @@ namespace PhotOn.Infrastructure.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Year = table.Column<DateTime>(nullable: true)
+                    DOB = table.Column<DateTime>(nullable: false),
+                    Balance = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Awards",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Awards", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,29 +60,6 @@ namespace PhotOn.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Equipment", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Publications",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: true),
-                    coordX = table.Column<decimal>(nullable: false),
-                    coordY = table.Column<decimal>(nullable: false),
-                    PictureLink = table.Column<string>(nullable: true),
-                    PublicationDate = table.Column<DateTime>(nullable: false),
-                    Season = table.Column<int>(nullable: false),
-                    TextDescription = table.Column<string>(nullable: true),
-                    LikeCount = table.Column<int>(nullable: false),
-                    IsApproved = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Publications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -220,6 +183,36 @@ namespace PhotOn.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Publications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    ImageLink = table.Column<string>(nullable: true),
+                    Price = table.Column<int>(nullable: false),
+                    coordX = table.Column<decimal>(nullable: false),
+                    coordY = table.Column<decimal>(nullable: false),
+                    PublicationDate = table.Column<DateTime>(nullable: false),
+                    Season = table.Column<int>(nullable: false),
+                    TextDescription = table.Column<string>(nullable: true),
+                    LikeCount = table.Column<int>(nullable: false),
+                    IsApproved = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Publications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Publications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
@@ -228,15 +221,17 @@ namespace PhotOn.Infrastructure.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DateTime = table.Column<DateTime>(nullable: false),
                     TextDescription = table.Column<string>(nullable: true),
-                    AwardId = table.Column<int>(nullable: false)
+                    AwardTitle = table.Column<string>(nullable: true),
+                    ImageLink = table.Column<string>(nullable: true),
+                    TagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Events_Awards_AwardId",
-                        column: x => x.AwardId,
-                        principalTable: "Awards",
+                        name: "FK_Events_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -290,27 +285,6 @@ namespace PhotOn.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PublicationImages",
-                columns: table => new
-                {
-                    PublicationId = table.Column<int>(nullable: false),
-                    ImageLink = table.Column<string>(nullable: false),
-                    Id = table.Column<int>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    Priority = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PublicationImages", x => new { x.PublicationId, x.ImageLink });
-                    table.ForeignKey(
-                        name: "FK_PublicationImages_Publications_PublicationId",
-                        column: x => x.PublicationId,
-                        principalTable: "Publications",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PublicationPurchases",
                 columns: table => new
                 {
@@ -338,30 +312,6 @@ namespace PhotOn.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SavedPublications",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    PublicationId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SavedPublications", x => new { x.UserId, x.PublicationId });
-                    table.ForeignKey(
-                        name: "FK_SavedPublications_Publications_PublicationId",
-                        column: x => x.PublicationId,
-                        principalTable: "Publications",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_SavedPublications_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PublicationTags",
                 columns: table => new
                 {
@@ -381,6 +331,30 @@ namespace PhotOn.Infrastructure.Migrations
                         name: "FK_PublicationTags_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SavedPublications",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    PublicationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SavedPublications", x => new { x.UserId, x.PublicationId });
+                    table.ForeignKey(
+                        name: "FK_SavedPublications_Publications_PublicationId",
+                        column: x => x.PublicationId,
+                        principalTable: "Publications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SavedPublications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -450,9 +424,9 @@ namespace PhotOn.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_AwardId",
+                name: "IX_Events_TagId",
                 table: "Events",
-                column: "AwardId");
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Likes_UserId",
@@ -468,6 +442,11 @@ namespace PhotOn.Infrastructure.Migrations
                 name: "IX_PublicationPurchases_PublicationId",
                 table: "PublicationPurchases",
                 column: "PublicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Publications_UserId",
+                table: "Publications",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PublicationTags_TagId",
@@ -509,9 +488,6 @@ namespace PhotOn.Infrastructure.Migrations
                 name: "PublicationEquipments");
 
             migrationBuilder.DropTable(
-                name: "PublicationImages");
-
-            migrationBuilder.DropTable(
                 name: "PublicationPurchases");
 
             migrationBuilder.DropTable(
@@ -530,9 +506,6 @@ namespace PhotOn.Infrastructure.Migrations
                 name: "Equipment");
 
             migrationBuilder.DropTable(
-                name: "Tags");
-
-            migrationBuilder.DropTable(
                 name: "Publications");
 
             migrationBuilder.DropTable(
@@ -542,7 +515,7 @@ namespace PhotOn.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Awards");
+                name: "Tags");
         }
     }
 }
