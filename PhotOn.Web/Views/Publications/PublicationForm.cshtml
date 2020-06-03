@@ -4,86 +4,98 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@Model.PageTitle</h1>
+<!-- separator -->
+<img src="~/icons/separator.png" style="width: 100%; height: 20px; object-fit: cover; display: block;">
 
-@using (Html.BeginForm("Save", "Publications", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-row">
-        <span id="output">
-            @if (!Model.IsNewCreated)
-            {
-                <img src="@Model.ImageLink" class="img-add-publication" alt="New Part" />
-            }
-        </span>
-    </div>
-    <hr />
-    <div class="form-group img-upload-car-button">
-        @Html.LabelFor(m => m.Picture, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        @Html.TextBoxFor(m => m.Picture, htmlAttributes: new { @type = "file", @class = "form-control-sm", @id = "file", @accept = "image/png" })
-        @Html.ValidationMessageFor(m => m.Picture)
-        <p></p>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(c => c.Title, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        @Html.TextBoxFor(c => c.Title, htmlAttributes: new { @class = "form-control form-control-sm" })
-        @Html.ValidationMessageFor(c => c.Title)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(c => c.TextDescription, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        @Html.TextAreaFor(c => c.TextDescription, htmlAttributes: new { @class = "form-control form-control-sm" })
-        @Html.ValidationMessageFor(c => c.TextDescription)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(c => c.Season, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        <select asp-for="Season" asp-items="Html.GetEnumSelectList<PhotOn.Core.Entities.TimeOfTheYear>()">
-            <option selected="selected" value="">Please select</option>
-        </select>
-        @Html.ValidationMessageFor(c => c.Season)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(c => c.Price, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        @Html.TextBoxFor(c => c.Price, htmlAttributes: new { @class = "form-control form-control-sm" })
-        @Html.ValidationMessageFor(c => c.Price)
-    </div>
+<div class="container">
+    <h1 style="margin-top: 5px;">@Model.PageTitle</h1>
 
-    @*equipment*@
-    <div class="form-group">
-        @Html.LabelFor(c => c.EquipmentModels, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        <div class="row">
-            <div class="col-sm-8" id="inputs_eq">
-                <input type="text" name="EquipmentModels[0].Title" value="" class="input-group-text" />
-            </div>
-            <div class="col-sm-4">
-                <input type="button" id="add_eq" value="add" class="btn btn-success">
+    @using (Html.BeginForm("Save", "Publications", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-row">
+            <span id="output">
+                @if (!Model.IsNewCreated)
+                {
+                    <img src="@Model.ImageLink" class="img-add-publication" alt="New Part" />
+                }
+            </span>
+        </div>
+        <hr />
+        <div class="form-group img-upload-car-button">
+            @Html.LabelFor(m => m.Picture, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(m => m.Picture, htmlAttributes: new { @type = "file", @class = "form-control-sm", @id = "file", @accept = "image/png" })
+            @Html.ValidationMessageFor(m => m.Picture)
+            <p></p>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Title, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(c => c.Title, htmlAttributes: new { @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(c => c.Title)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.TextDescription, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+            @Html.TextAreaFor(c => c.TextDescription, htmlAttributes: new { @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(c => c.TextDescription)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Season, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+            <select asp-for="Season" asp-items="Html.GetEnumSelectList<PhotOn.Core.Entities.TimeOfTheYear>()">
+                <option selected="selected" value="">Please select</option>
+            </select>
+            @Html.ValidationMessageFor(c => c.Season)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(c => c.Price, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(c => c.Price, htmlAttributes: new { @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(c => c.Price)
+        </div>
+
+        @*equipment*@
+        <div class="form-group">
+            @Html.LabelFor(c => c.EquipmentModels, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+            <div class="row">
+                <div class="col-sm-8" id="inputs_eq">
+                    <input type="text" name="EquipmentModels[0].Title" class="form-control" />
+                </div>
+                <div class="col-sm-4">
+                    <input type="button" id="add_eq" value="Add one more" class="btn btn-primary" style="float:right;">
+                </div>
             </div>
         </div>
-    </div>
 
-    @*tags*@
-    <div class="form-group">
-        @Html.LabelFor(c => c.TagModels, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
-        <div class="row">
-            <div class="col-sm-8" id="inputs_tag">
-                <input type="text" name="TagModels[0].Title" value="" class="input-group-text" />
-            </div>
-            <div class="col-sm-4">
-                <input type="button" id="add_tag" value="add" class="btn btn-success">
+        @*tags*@
+        <div class="form-group">
+            @Html.LabelFor(c => c.TagModels, htmlAttributes: new { @class = "col-form-label col-form-label-sm" })
+            <div class="row">
+                <div class="col-sm-8" id="inputs_tag">
+                    <input type="text" name="TagModels[0].Title" value="" class="form-control" />
+                </div>
+                <div class="col-sm-4">
+                    <input type="button" id="add_tag" value="Add one more" class="btn btn-primary" style="float:right;">
+                </div>
             </div>
         </div>
-    </div>
 
-    <partial name="map_partial" model="true" />
+        <partial name="map_partial" model="true" />
 
-    <input type="hidden" name="coordX">
-    <input type="hidden" name="coordY">
-    <input type="submit" id="real_submit" style="display: none;">
-    <button id="fake_submit" value="Save">Save</button>
+        <input type="hidden" name="coordX">
+        <input type="hidden" name="coordY">
 
-    @Html.HiddenFor(c => c.Id)
-    // здесь дописать скрытые поля для всех данных, что не изменяются
-    @*@Html.HiddenFor(c => c.DateOfAdding)*@
-    @Html.AntiForgeryToken()
-}
+        <div class="form-group" style="text-align:center;margin-top: 1rem;">
+            <input type="submit" id="real_submit" style="display: none;">
+            <button id="fake_submit" value="Save" class="btn btn-success btn-lg">Save</button>
+        </div>
+        
+        @Html.HiddenFor(c => c.Id)
+        // здесь дописать скрытые поля для всех данных, что не изменяются
+        @*@Html.HiddenFor(c => c.DateOfAdding)*@
+        @Html.AntiForgeryToken()
+        }
+</div>
+
+<!-- separator -->
+<img src="~/icons/separator.png" style="width: 100%; height:20px; object-fit: cover; display: block;">
+
 @section scripts
 {
     <script>
@@ -117,16 +129,14 @@
     </script>
 
     <script>
-         const real_submit = document.getElementById('real_submit');
+        const real_submit = document.getElementById('real_submit');
         const form = document.getElementsByTagName('form')[0];
         document.getElementById('fake_submit').addEventListener('click', () => {
-                    console.log("we are here 1");
             const coords = map_input.getCoords();
             form.coordX.value = coords.lat;
             form.coordY.value = coords.lng;
             real_submit.click();
         }, false);
-        console.log("we are here 2");
     </script>
 
     <script>
@@ -141,7 +151,7 @@
             let inp = document.createElement('input');
             inp.type = 'text';
             inp.name = 'EquipmentModels[' + id + '].Title';
-            inp.className = 'input-group-text';
+            inp.className = 'form-control';
             root.appendChild(inp);
         }
     </script>
@@ -158,7 +168,7 @@
             let inp = document.createElement('input');
             inp.type = 'text';
             inp.name = 'TagModels[' + id + '].Title';
-            inp.className = 'input-group-text';
+            inp.className = 'form-control';
             root.appendChild(inp);
         }
     </script>
