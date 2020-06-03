@@ -1,4 +1,4 @@
-![alt text](https://github.com/Katrinn23/PhotoOn/tree/master/git_images/logo.jpg "PhotOn Logo")
+![alt text](https://github.com/Katrinn23/PhotoOn/blob/master/git_images/logo.jpg "PhotOn Logo")
 
 # PhotOn
 
