@@ -32,17 +32,17 @@
                 }
                 @if (User.IsInRole("Admin") || User.IsInRole("Expert"))
                 {
-                    <li style="display: inline-block;width: 40%;text-align: center;">
+                    <li style="display: inline-block;text-align: center;">
                         <a asp-controller="Expert" asp-action="Index" style="font-size: 20px;">Requests</a>
                     </li>
                 }
                 @if (User.IsInRole("Admin"))
                 {
 
-                    <li style="display: inline-block;width: 40%;text-align: center;">
+                    <li style="display: inline-block;text-align: center;">
                         <a asp-controller="Publications" asp-action="PublicationsManagement" style="font-size: 20px;">PlacePanel</a>
                     </li>
-                    <li style="display: inline-block;width: 40%;text-align: center;">
+                    <li style="display: inline-block;text-align: center;">
                         <a asp-controller="Admin" asp-action="GetUsers" style="font-size: 20px;">UserPanel</a>
                     </li>
                 }
