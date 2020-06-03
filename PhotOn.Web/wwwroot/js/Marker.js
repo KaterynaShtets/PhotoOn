@@ -12,7 +12,7 @@ class Marker
 
 function getMarkerContentString(marker)
 {
-	const link = document.location.host + "/Publications/Details?publicationId=" + marker.id;
+	const link = document.location.host + "/Publications/ViewMore?Id=" + marker.id;
 	const contentString = "<div>" +
 			"<h1>" + marker.title + "</h1>" +
 			"<hr/>" +
