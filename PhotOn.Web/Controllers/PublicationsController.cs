@@ -8,6 +8,7 @@ using PhotOn.Web.Models;
 using PhotOn.Web.ViewModels;
 using PhotOn.Web.ViewModels.Publications;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,13 +34,14 @@ namespace PhotOn.Web.Controllers
             _tagService = tagService;
         }
 
-        public ActionResult Index(string sortOrder = null , string searchString = null, int filterTag = -1)
-        {
 
+        public ActionResult Index(string sortOrder = null, string searchString = null, int filterTag = -1, bool mapWasDisplayed = false)
+        {
             ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
             ViewData["LikeSortParm"] = sortOrder == "Like" ? "like_desc" : "Like";
             ViewData["currentFilter"] = searchString;
+            ViewData["displayMap"] = mapWasDisplayed;
 
             var publicationsViewModel = new PublicationsViewModel();
 
@@ -80,7 +82,7 @@ namespace PhotOn.Web.Controllers
             var publications =
                 _mapper.Map<IEnumerable<PublicationViewModel>>(publicationDetailsDtos.ToList());
             publicationsViewModel.Publications = publications;
-            
+
             return View("Search", publications);
         }
 
