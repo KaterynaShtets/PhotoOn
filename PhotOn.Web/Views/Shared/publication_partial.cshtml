@@ -25,7 +25,7 @@
             <li style="display: inline-block;font-size: 20px;padding-left: 20px;padding-right: 20px;">
                 @Model.LikeCount
                 <a asp-controller="Publications" asp-action="SetLike" asp-route-publicationId="@Model.Id">
-                    <img src="icons/like.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
+                    <img src="~/icons/like.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
                 </a>
             </li>
 
@@ -40,7 +40,7 @@
 
             <li style="display: inline-block;font-size: 20px;padding-left: 20px;padding-right: 20px;">
                 <a asp-controller="User" asp-action="ConfirmPayment" asp-route-publicationId="@Model.Id">
-                    <img src="icons/add_to_cart.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
+                    <img src="~/icons/add_to_cart.svg" style="margin-bottom: 5px; width: 18px;height: 18px;">
                 </a>
                 @Model.Price
             </li>
