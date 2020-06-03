@@ -8,8 +8,8 @@
 </head>
 <body>
     <!-- common header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <img src="~/icons/logo.png" style="height: 80px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0 10px;">
+        <img src="~/icons/logo.png" style="height: 50px;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,15 +17,15 @@
             @*left*@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" asp-controller="Home" asp-action="Index" style="font-size: 20px;">Home</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Index" style="font-size: 15px;">Home</a>
                 </li>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Publications" asp-action="NewPublication" style="font-size: 20px;">Post place</a>
+                        <a class="nav-link" asp-controller="Publications" asp-action="NewPublication" style="font-size: 15px;">Post place</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Publications" asp-action="Index" style="font-size: 20px;">Find place</a>
+                        <a class="nav-link" asp-controller="Publications" asp-action="Index" style="font-size: 15px;">Find place</a>
                     </li>
                 }
             </ul>
@@ -34,7 +34,7 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <li class="nav-item active">
-                    <a class="nav-link" asp-controller="User" asp-action="ReplenishBalance" style="font-size: 20px;">Balance</a>
+                    <a class="nav-link" asp-controller="User" asp-action="ReplenishBalance" style="font-size: 15px;">Balance</a>
                 </li>
                 <li class="nav-item">
                     @*dropdown*@
@@ -53,7 +53,7 @@
             else
             {
                 <li class="nav-item active">
-                    <a class="nav-link" asp-controller="Account" asp-action="SignIn" style="font-size: 20px;">
+                    <a class="nav-link" asp-controller="Account" asp-action="SignIn" style="font-size: 15px;">
                         Get started!
                     </a>
                 </li>
@@ -77,15 +77,15 @@
                 <div class="col-sm-7">
                     <ul style="list-style-type: none; margin: 0; padding: 10px 0 0 0;">
                         <li style="display: inline-block;width: 30%;text-align: center;">
-                            <a asp-controller="Home" asp-action="Index" style="font-size: 20px;">Home</a>
+                            <a asp-controller="Home" asp-action="Index" style="font-size: 15px;">Home</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li style="display: inline-block;width: 30%;text-align: center;">
-                                <a href="#" style="font-size: 20px;">Post place </a>
+                                <a href="#" style="font-size: 15px;">Post place </a>
                             </li>
                             <li style="display: inline-block;width: 30%;text-align: center;">
-                                <a asp-controller="Publications" asp-action="Index" style="font-size: 20px;">Find place </a>
+                                <a asp-controller="Publications" asp-action="Index" style="font-size: 15px;">Find place </a>
                             </li>
                         }
                     </ul>
