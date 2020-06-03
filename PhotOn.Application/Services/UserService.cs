@@ -62,29 +62,25 @@ namespace PhotOn.Application.Services
             };
         }
 
-        public bool CheckUserBalance(int balance, int sum)
+        public bool UserBalanceIsOkay(int balance, int sum)
         {
             if (balance < sum)
             {
                 return false;
             }
-
             return true;
         }
 
-        public bool CheckUserAge(DateTime dob)
+        public bool AgeIsOkay(DateTime dob)
         {
             var today = DateTime.Today;
             var age = today.Year - dob.Year;
-
             if (age > 16)
             {
                 return true;
             }
-
             return false;
         }
-
 
         public string GetCurrentUserId()
         {

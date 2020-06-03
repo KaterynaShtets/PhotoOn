@@ -83,7 +83,7 @@ namespace PhotOn.Infrastructure.Repository
             _dbContext.PublicationEquipments.Add(equipmentToPublication);
         }
 
-        public void BuyPublication(string userId, int publicationId)
+        public bool PublicationIsBought(string userId, int publicationId)
         {
             var purchase = new PublicationPurchase()
             {
@@ -91,8 +91,21 @@ namespace PhotOn.Infrastructure.Repository
                 PublicationId = publicationId
             };
 
-            _dbContext.PublicationPurchases.Add(purchase);
+            var samePublicationPurchase =
+                _dbContext.PublicationPurchases
+                .Where(p =>
+                       p.UserId == userId &
+                       p.PublicationId == publicationId)
+                .ToList();
+
+            if (samePublicationPurchase.Count() == 0)
+            {
+                _dbContext.PublicationPurchases.Add(purchase);
+                return true;
+            }
+            return false;
         }
+
 
         public bool isPurchased(string userId, int publicationId) 
         {

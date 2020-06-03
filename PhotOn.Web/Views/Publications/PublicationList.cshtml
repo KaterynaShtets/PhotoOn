@@ -26,7 +26,6 @@
                 <td>@Html.ActionLink(publication.Title, "Details", "Publications", null, null, null, htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
                 <td>@publication.coordX</td>
                 <td>@publication.coordY</td>
-                <td>@Html.ActionLink("Edit", "Edit", "Publications", htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
                 <td>@Html.ActionLink("Delete", "Delete", "Publications", htmlAttributes: null, routeValues: new { publicationId = publication.Id })</td>
             </tr>
         }
@@ -42,7 +41,6 @@
                     {
                         orderable: false
                     },
-                    {},
                     {},
                     {},
                     {},

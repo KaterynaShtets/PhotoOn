@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using PhotOn.Application.Dtos;
 using PhotOn.Application.Interfaces;
@@ -24,10 +25,18 @@ namespace PhotOn.Application.Services
         private readonly IUtilService _utilService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<PublicationService> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly string containerName = "publications";
 
-        public PublicationService(IUnitOfWork unitOfWork, IUserService userService, IUtilService utilService, ILogger<PublicationService> logger, IFileStorageServcie fileStorageServcie, IHttpContextAccessor httpContextAccessor)
+        public PublicationService(
+         IUnitOfWork unitOfWork,
+         IUserService userService,
+         IUtilService utilService,
+         ILogger<PublicationService> logger,
+         IFileStorageServcie fileStorageServcie,
+         IHttpContextAccessor httpContextAccessor,
+         UserManager<ApplicationUser> userManager)
         {
             _db = unitOfWork;
             _userService = userService;
@@ -35,6 +44,7 @@ namespace PhotOn.Application.Services
             _logger = logger;
             _fileStorageService = fileStorageServcie;
             _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public  void Add(PublicationCreationDto publicationCreationModel)
@@ -244,11 +254,30 @@ namespace PhotOn.Application.Services
         {
             try
             {
-                user.Balance -= publication.Price;
-                var author = publication.User;
-                author.Balance += Convert.ToInt32(Math.Floor(0.9 * publication.Price));
-                _db.Publications.BuyPublication(user.Id, publication.Id);
-                _db.Save();
+                if (_db.Publications.PublicationIsBought(user.Id, publication.Id))
+                {
+                    user.Balance -= publication.Price;
+
+                    var authorId = publication.User.Id;
+                    var authorsIncome =
+                        Convert.ToInt32(Math.Floor(0.9 * publication.Price));
+
+                    var adminsIncome = publication.Price - authorsIncome;
+
+                    var admin = _userManager.GetUsersInRoleAsync("Admin")
+                        .Result.FirstOrDefault();
+                    admin.Balance += adminsIncome;
+
+                    var resultAdmin = _userManager.UpdateAsync(admin);
+
+                    var author = _userManager.Users
+                        .SingleOrDefault(u => u.Id == authorId);
+                    author.Balance += authorsIncome;
+
+                    var resultAuthor = _userManager.UpdateAsync(author);
+
+                    _db.Save();
+                }
             }
             catch 
             {

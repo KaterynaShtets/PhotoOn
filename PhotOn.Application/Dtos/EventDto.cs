@@ -11,5 +11,6 @@ namespace PhotOn.Application.Dtos
         public string TextDescription { get; set; }
         public string AwardTitle { get; set; }
         public TagDto Tag { get; set; }
+        public string ImageLink { get; set; }
     }
 }

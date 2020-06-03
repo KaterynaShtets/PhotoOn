@@ -19,7 +19,7 @@
                 <tr>
                     <td>
                         <h3>
-                            Your balance:@Model.UserBalance
+                            Your balance:
                         </h3>
                     </td>
                     <td style="text-align: right;">
@@ -67,9 +67,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button asp-controller="User" asp-action="MakePurchase" asp-route-publicationId="@Model.PublicationId" type="button" class="btn btn-primary" style="background-color: #f7a825; font-size:20px; border:none;">
-                    Confirm
-                </button>
+                @Html.ActionLink("Confirm", "MakePurchase", "User",
+                     routeValues: new { publicationId = Model.PublicationId },
+                     htmlAttributes: new
+                     {
+                         @type = "button",
+                         @class = "btn btn-primary",
+                         @style = "background-color: #f7a825; font-size:20px; border:none;"
+                     })
             </div>
         </div>
     </div>

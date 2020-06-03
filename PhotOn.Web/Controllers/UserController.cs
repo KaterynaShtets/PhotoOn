@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using PhotOn.Application.Interfaces;
 using PhotOn.Application.Model;
 using PhotOn.Web.Mapper;
+using PhotOn.Web.Models.Payment;
 using PhotOn.Web.ViewModels;
+using PhotOn.Web.ViewModels.Payment;
 using PhotOn.Web.ViewModels.Publications;
 using PhotOn.Web.ViewModels.User;
 using PhotOn.Web.ViewModels.Util;
@@ -19,14 +21,15 @@ namespace PhotOn.Web.Controllers
     {
         private readonly IPublicationService _publicationService;
         private readonly IUserService _userService;
-        private readonly IUtilService _utilService;
         private readonly IMapper _mapper;
 
-        public UserController(IPublicationService publicationService, IUserService userService, IMapper mapper)
+        public UserController(
+            IPublicationService publicationService,
+            IUserService userService,
+            IMapper mapper)
         {
             _publicationService = publicationService;
             _userService = userService;
-            _mapper = mapper;
         }
 
         public ActionResult<ProfileUserPageModel> SetProfile()
@@ -56,8 +59,12 @@ namespace PhotOn.Web.Controllers
 
         public ActionResult ReplenishBalance() 
         {
+            var usersBalance =
+             _userService.GetCurrentUser().Result.Balance;
+            var replenishBalanceViewModel =
+              new ReplenishBalanceViewModel(usersBalance);
 
-            return View("Balance");
+            return View("Balance", replenishBalanceViewModel);
         }
 
         public async Task<ActionResult> ConfirmPayment( int publicationId)
@@ -75,38 +82,51 @@ namespace PhotOn.Web.Controllers
            return View("Payment", paymentModel);
         }
 
-        public async Task<ActionResult> MakePayment(int publicationId)
+        public async Task<ActionResult> MakePurchase(int publicationId)
         {
             var publication = _publicationService.Get(publicationId);
             var user = await _userService.GetCurrentUser();
 
-            if (_userService.CheckUserAge(user.DOB))
+            if (!_userService.AgeIsOkay(user.DOB))
             {
                 var message = new MessageViewModel
                 {
                     Message = "Soory, only users older than 16 years old can make purchases"
                 };
 
-                return RedirectToAction("ErrorMessage", new { model = message });
+                return View("~/Views/Shared/ErrorMessage.cshtml", message);
             }
 
-            if (_userService.CheckUserBalance(user.Balance, publication.Price))
+            if (!_userService.UserBalanceIsOkay(user.Balance, publication.Price))
             {
                 var message = new MessageViewModel
                 {
                     Message = "Soory, you don't hane anough mony to proceed purchase"
                 };
 
-                return RedirectToAction("ErrorMessage", new { model = message });
+                return View("~/Views/Shared/ErrorMessage.cshtml", message);
             }
+            _publicationService.BuyPublication(user, publication);
 
-            return RedirectToAction("Search", "Publications");
+            return RedirectToAction("Index", "Publications");
         }
 
-        public ActionResult GetCheckout()
+        public ActionResult GetCheckout(int sum)
         {
+            var uniqe_guid = Guid.NewGuid();
 
-            return View("Check");
+            var userId = _userService.GetCurrentUserId();
+
+            LiqPayCheckoutFormModel liqPayCheckoutFormModel =
+                LiqPayHelper.GetLiqPayModel(uniqe_guid.ToString(), "Balance Replenishment", sum, userId);
+
+            CheckoutViewModel checkoutViewModel = new CheckoutViewModel
+            {
+                Sum = sum,
+                LiqPayCheckoutFormModel = liqPayCheckoutFormModel
+            };
+
+            return View("Check", checkoutViewModel);
         }
     }
 }

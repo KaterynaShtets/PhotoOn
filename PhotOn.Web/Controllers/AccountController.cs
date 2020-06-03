@@ -52,14 +52,14 @@ namespace PhotOn.Web.Controllers
                     var result = await _userManager.CreateAsync(user, model.Password);
 
                     user = await _userManager.FindByEmailAsync(model.Email);
-                    var token = _userService.CreateToken(model.Email);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     if (result.Succeeded)
                     {
                         await _userManager.AddToRoleAsync(user, "User");
 
                         var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { userId = user.Id, @token = token });
 
-                        await _emailSender.SendEmailAsync("katkachenko2407@gmail.com", user.Email, "Confirm your email address", confirmationLink);
+                        await _emailSender.SendEmailAsync("kateryna.tkachenko@nure.ua", user.Email, "Confirm your email address", confirmationLink);
                         return View("ConfirmationEmail");
                     }
 

@@ -58,7 +58,7 @@ namespace PhotOn.Web.Controllers
         {
             _expertService.RejectPublication(publicationId);
 
-            await _emailSender.SendEmailAsync("katkachenko2407@gmail.com", "katetkacenko@gmail.com", "Confirm your email address", "Your pub was rejected");
+            await _emailSender.SendEmailAsync("kateryna.tkachenko@nure.ua", "katetkacenko@gmail.com", "Confirm your email address", "Your pub was rejected");
             return RedirectToAction("Index", "Expert");
         }
     }

@@ -21,7 +21,7 @@ namespace PhotOn.Core.Repositories
         void AddTagToPublication(int tagId, int publicationId);
         void AddEquipmentToPublication(int equipmentId, int publicationId);
 
-        void BuyPublication(string userId, int publicationId);
+        bool PublicationIsBought(string userId, int publicationId);
         bool isPurchased(string userId, int publicationId);
 
 

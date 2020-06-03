@@ -9,13 +9,13 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\" />
-    <Folder Include="wwwroot\icons\" />
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Google.Apis.Analytics.v3" Version="1.46.0.1679" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.4" />

@@ -7,11 +7,11 @@
     <div class="row" style="padding: 40px 80px;background-color: #f7a41d;">
         <!-- small screen picture -->
         <div class="col-sm-12 d-block d-lg-none" style="text-align: center;">
-            <img src="icons/main_page.png" class="img-fluid" style="max-width: 90%;">
+            <img src="~/icons/main_page.png" class="img-fluid" style="max-width: 90%;">
         </div>
         <!-- large screen picture -->
         <div class="col-sm-8 d-none d-lg-block">
-            <img src="icons/main_page.png" class="img-fluid" style="max-width: 90%;">
+            <img src="~/icons/main_page.png" class="img-fluid" style="max-width: 90%;">
         </div>
 
         <!-- doesn't display on small screens -->
@@ -39,7 +39,7 @@
         </div>
         <!-- larger screen button -->
         <div class="col-sm-12 d-none d-md-block" style="text-align: center;">
-            <a href="#" class="btn btn-primary" style="padding: 20px 40px;font-size: 25px; font-weight: 700;background-color: #092c5d;border-color: #092c5d;">
+            <a asp-controller="Account" asp-action="Signin" class="btn btn-primary" style="padding: 20px 40px;font-size: 25px; font-weight: 700;background-color: #092c5d;border-color: #092c5d;">
                 Get started
             </a>
         </div>

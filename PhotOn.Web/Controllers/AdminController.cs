@@ -31,7 +31,6 @@ using PhotOn.Web.ViewModels.Account;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    //[Authorize(Roles = RoleName.Admin)]
     public ActionResult ChangeRole(ChangeRoleViewModel changeRoleModel)
     {
         var userId = changeRoleModel.UserViewModel.Id;
@@ -65,7 +64,6 @@ using PhotOn.Web.ViewModels.Account;
         return RedirectToAction("GetUsers");
     }
 
-    //[Authorize(Roles = RoleName.Admin)]
     public ActionResult GetUsers()
     {
         var usersInDb = _userManager.Users.ToList();
@@ -85,7 +83,6 @@ using PhotOn.Web.ViewModels.Account;
         return View(usersViewModel);
     }
 
-    //[Authorize(Roles = RoleName.Admin)]
     public ActionResult GetUser(string userId)
     {
         ApplicationUser user;
@@ -100,10 +97,6 @@ using PhotOn.Web.ViewModels.Account;
             throw new Exception(e.Message);
         }
 
-        // только админ может изменять других пользователей
-        //var principal = HttpContext.User;
-        //if (principal.IsInRole(RoleName.Admin))
-        //{
         var userViewModel =
             WebMapper.Mapper.Map<UserViewModel>(user);
 
@@ -120,10 +113,10 @@ using PhotOn.Web.ViewModels.Account;
         viewModel.RoleViewModels = roleViewModels;
 
         return View("GetUser", viewModel);
-        //}
-        //else
-        //{
-        //    return View();
-        //}
+    }
+
+    public ActionResult GetAnalytics() 
+    {
+        return View("Analytics");
     }
 }

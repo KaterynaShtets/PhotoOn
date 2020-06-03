@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ using PhotOn.Core.Repositories.Base;
 using PhotOn.Infrastructure.Data;
 using PhotOn.Infrastructure.Repository;
 using PhotOn.Infrastructure.Repository.Base;
+using PhotOn.Web.Helpers;
 using PhotOn.Web.Service;
 
 namespace PhotOn.Web
@@ -134,17 +136,17 @@ namespace PhotOn.Web
                 });
 
 
-            //services.AddAuthentication()
-            //    .AddFacebook(options =>
-            //{
-            //    options.AppId = Configuration["FacebookAppId"];
-            //    options.AppSecret = Configuration["FacebookAppSecret"];
-            //})
-            //    .AddGoogle(options =>
-            //    { 
-            //        options.ClientId = Configuration["GoogleClientId"];
-            //        options.ClientSecret = Configuration["GoogleClientSecret"];
-            //    }); 
+            services.AddAuthentication()
+                .AddFacebook(options =>
+            {
+                options.AppId = Configuration["FacebookAppId"];
+                options.AppSecret = Configuration["FacebookAppSecret"];
+            })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = Configuration["GoogleClientId"];
+                    options.ClientSecret = Configuration["GoogleClientSecret"];
+                });
 
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
 

@@ -14,8 +14,7 @@ namespace PhotOn.Application.Interfaces
         string GetCurrentUserId();
         UserToken CreateToken(string email);
 
-        bool CheckUserAge(DateTime dob);
-        bool CheckUserBalance(int balance, int sum);
-        //Task<IEnumerable<UserModel>> GetUserList(PagginationModel pagination);
+        bool AgeIsOkay(DateTime dob);
+        bool UserBalanceIsOkay(int balance, int sum);
     }
 }

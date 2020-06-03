@@ -19,13 +19,12 @@ namespace PhotOn.Web.Controllers
     {
         private readonly IPublicationService _publicationService;
         private readonly IUserService _userService;
-        private readonly IUtilService _utilService;
         private readonly IMapper _mapper;
         private readonly IEquipmentService _equipmentService;
         private readonly ITagService _tagService;
 
         public PublicationsController(IPublicationService publicationService, IEquipmentService equipmentService,
-            IUserService userService, ITagService tagService, IMapper mapper)
+            IUserService userService,  ITagService tagService, IMapper mapper)
         {
             _publicationService = publicationService;
             _userService = userService;
@@ -45,7 +44,7 @@ namespace PhotOn.Web.Controllers
 
             var publicationsViewModel = new PublicationsViewModel();
 
-            var publicationDetailsDtos = _publicationService.GetAllPublications().AsQueryable();
+            var publicationDetailsDtos = _publicationService.GetAllPresentApprovedPublications().AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {

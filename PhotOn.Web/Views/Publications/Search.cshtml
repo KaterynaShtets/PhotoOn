@@ -34,7 +34,7 @@
                     <form asp-controller="Publications" asp-action="Index" method="get">
                         <label>
                             Search:
-                            <input type="text" name="SearchString" value="@ViewData["currentFilter"]" required>
+                            <input type="text" name="SearchString" value="@ViewData["currentFilter"]">
                             <input type="hidden" name="mapWasDisplayed" value="true" />
                             <input type="submit" value="Search!">
                         </label>

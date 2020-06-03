@@ -11,7 +11,6 @@ namespace PhotOn.Web.Controllers
     public class EventsController : Controller
     {
         private readonly IEventService _eventService;
-        private readonly IMapper _mapper;
 
         public EventsController(IEventService eventService)
         {
@@ -20,7 +19,7 @@ namespace PhotOn.Web.Controllers
         public IActionResult EventsList()
         {
             var events = _eventService.GetAllEvents();
-            return View(events);
+            return View("EventsList", events);
         }
     }
 }
