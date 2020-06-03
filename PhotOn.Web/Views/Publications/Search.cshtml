@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<PublicationViewModel>
+@*
+    also requires a parameter - bool displayMap
+    should be passed via ViewData["displayMap"]
+*@
+
 @{
     ViewData["Title"] = "Search";
+    var tags = Model.SelectMany(p => p.TagModels).Distinct();
 }
 
 <!-- separator -->
@@ -9,16 +15,16 @@
 @*tab selector*@
 <ul class="nav nav-tabs justify-content-center" style="margin-top:10px;">
     <li class="nav-item">
-        <a class="nav-link" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#map_view">Map</a>
+        <a class="nav-link @((bool)ViewData["displayMap"] ? "active" : "")" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#map_view">Map</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#list_view">Feed</a>
+        <a class="nav-link @((bool)ViewData["displayMap"] ? "" : "active")" style="font-size: 30px;padding: 10px 70px;" data-toggle="tab" href="#list_view">Feed</a>
     </li>
 </ul>
 
 
 <div class="tab-content">
-    <div class="tab-pane fade" id="map_view">
+    <div class="tab-pane fade @((bool)ViewData["displayMap"] ? "show active" : "")" id="map_view">
         <div class="container">
             <br>
             <!-- search, filter form -->
@@ -29,6 +35,7 @@
                         <label>
                             Search:
                             <input type="text" name="SearchString" value="@ViewData["currentFilter"]" required>
+                            <input type="hidden" name="mapWasDisplayed" value="true" />
                             <input type="submit" value="Search!">
                         </label>
                     </form>
@@ -39,9 +46,6 @@
                     <form>
                         <label>
                             Filter:
-                            @{
-                                var tags = Model.SelectMany(p => p.TagModels).Distinct();
-                            }
                             <select name="tagId" required>
                                 @foreach (var tag in tags)
                                 {
@@ -49,6 +53,7 @@
                                 }
                             </select>
                         </label>
+                        <input type="hidden" name="mapWasDisplayed" value="true" />
                         <input type="submit" value="Filter!">
                     </form>
                 </div>
@@ -62,7 +67,7 @@
         </div>
     </div>
 
-    <div class="tab-pane fade show active" id="list_view">
+    <div class="tab-pane fade @((bool)ViewData["displayMap"] ? "" : "show active")" id="list_view">
         <div class="container">
             <br>
             <!-- search, sort, filter form -->
@@ -73,6 +78,7 @@
                         <label>
                             Search:
                             <input type="text" name="SearchString" value="@ViewData["currentFilter"]" required>
+                            <input type="hidden" name="mapWasDisplayed" value="false" />
                             <input type="submit" value="Search!">
                         </label>
                     </form>
@@ -81,9 +87,9 @@
                 <!-- sort form -->
                 <div class="col-sm-4" style="text-align: center;">
                     <p style="display: inline-block;">Sort by:</p>
-                    <a asp-controller="Publications" asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]">Price</a>
-                    <a asp-controller="Publications" asp-action="Index" asp-route-sortOrder="@ViewData["LikesSortParm"]">Likes</a>
-                    <a asp-controller="Publications" asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">Title</a>
+                    <a asp-controller="Publications" asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-mapWasDisplayed="false">Price</a>
+                    <a asp-controller="Publications" asp-action="Index" asp-route-sortOrder="@ViewData["LikesSortParm"]" asp-route-mapWasDisplayed="false">Likes</a>
+                    <a asp-controller="Publications" asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-mapWasDisplayed="false">Title</a>
                 </div>
 
                 <!-- filter by tag form -->
@@ -91,15 +97,13 @@
                     <form asp-controller="Publications" asp-action="Index" method="get">
                         <label>
                             Filter:
-                            @{
-                                var tags = Model.SelectMany(p => p.TagModels).Distinct();
-                            }
                             <select name="filterTag" required>
                                 @foreach (var tag in tags)
                                 {
                                     <option value="@tag.Id">@tag.Title</option>
                                 }
                             </select>
+                            <input type="hidden" name="mapWasDisplayed" value="false" />
                             <input type="submit" value="Filter!">
                             <a asp-controller="Publications" asp-action="Index" asp-route-filterTag="">Rid of</a>
                         </label>
